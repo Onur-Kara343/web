@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 AI Image Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 AI Image Generator</h1>
+            <p>Text eingeben – KI malt sofort ein Bild (kostenlos)</p>
+        </header>
+
+        <div class="generator">
+            <div class="input-group">
+                <label>📝 Prompt</label>
+                <textarea id="prompt" rows="3" placeholder="z.B. eine majestätische Burg auf einem Berg im Sonnenuntergang, digitale Kunst, 4K"></textarea>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label>⚡ Negative Prompt (optional)</label>
+                    <input type="text" id="negative-prompt" placeholder="schlechte Qualität, Wasserzeichen, Text">
+                </div>
+                <div class="input-group">
+                    <label>📏 Größe</label>
+                    <select id="size">
+                        <option value="512">512x512 (schnell)</option>
+                        <option value="768">768x768 (gut)</option>
+                        <option value="1024" selected>1024x1024 (beste Qualität)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>🎨 Modell</label>
+                    <select id="model">
+                        <option value="flux">Flux (beste Qualität)</option>
+                        <option value="turbo">Turbo (schnell)</option>
+                        <option value="realistic">Realistic (fotorealistisch)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="generate-btn">✨ Bild generieren</button>
+
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>KI malt dein Bild...</p>
+                <p class="hint">(kann 10-20 Sekunden dauern)</p>
+            </div>
+
+            <div id="result" class="result hidden">
+                <img id="generated-image" alt="Generiertes Bild">
+                <div class="result-buttons">
+                    <button id="download-btn">💾 Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/js/main.js"></script>
+</body>
+</html>
