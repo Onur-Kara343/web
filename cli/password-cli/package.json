@@ -1,0 +1,9 @@
+{
+  "name": "password-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "password.js",
+  "bin": {
+    "password": "./password.js"
+  }
+} 

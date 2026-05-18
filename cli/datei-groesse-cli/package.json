@@ -1,0 +1,12 @@
+{
+  "name": "datei-groesse-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "groesse.js",
+  "bin": {
+    "dateigroesse": "./groesse.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

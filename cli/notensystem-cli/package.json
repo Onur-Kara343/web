@@ -1,0 +1,9 @@
+{
+  "name": "notensystem-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "nsystem.js",
+  "bin": {
+    "note": "./nsystem.js"
+  }
+}

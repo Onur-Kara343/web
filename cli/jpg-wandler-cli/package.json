@@ -1,0 +1,13 @@
+{
+  "name": "image-converter",
+  "version": "1.0.0",
+  "description": "Batch convert images to JPG",
+  "main": "convert.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node convert.js"
+  },
+  "dependencies": {
+    "sharp": "^0.32.5"
+  }
+}
