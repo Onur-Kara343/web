@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Exam Simulator SaaS | AI-Powered Exam Engine</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>📘 Exam Simulator SaaS</h1>
+            <p>AI-powered exam generation from PDFs & scripts • Realistic grading & analytics</p>
+            <div class="status-badge" id="connectionStatus">● Connected</div>
+        </header>
+
+        <!-- Main Grid -->
+        <div class="dashboard">
+            <!-- Left Panel: Material Hub -->
+            <div class="card">
+                <div class="card-title">
+                    <span>📂</span> 1. Knowledge Hub
+                </div>
+                
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">📎📄</div>
+                    <div>Drag & drop or click to upload</div>
+                    <div class="upload-subtext">PDF or TXT files (max 10MB each)</div>
+                    <input type="file" id="fileInput" class="file-input" accept=".pdf,.txt,application/pdf,text/plain" multiple>
+                </div>
+                
+                <button id="manualScriptBtn" class="btn btn-outline full-width">
+                    ✍️ Add manual script/text
+                </button>
+                
+                <div class="documents-header">
+                    <span>📄 Uploaded Materials</span>
+                    <span id="docCount">0 documents</span>
+                </div>
+                <div id="fileListContainer" class="file-list">
+                    <div class="empty-state-small">No files uploaded yet</div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="generateExamBtn" class="btn btn-primary">✨ Generate Exam</button>
+                    <button id="clearFilesBtn" class="btn btn-secondary">🗑 Clear All</button>
+                </div>
+                
+                <div id="parseStatus" class="parse-status"></div>
+            </div>
+
+            <!-- Right Panel: Exam Simulator -->
+            <div class="card">
+                <div class="card-title">
+                    <span>🎯</span> 2. Exam Simulator
+                </div>
+                
+                <div id="examContainer" class="exam-container">
+                    <div class="empty-state">
+                        ⚡ No active exam<br>
+                        Upload PDFs/scripts and click "Generate Exam"
+                    </div>
+                </div>
+                
+                <div id="gradingPanel" class="grading-panel" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>🔍 Intelligent exam engine • Extracts key concepts • Auto-grading with detailed feedback</p>
+        </footer>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>
