@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acapella Remixer</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎧</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/x-icon">           
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <div class="logo">
+                <span class="logo-icon">🎧</span>
+                <h1>Acapella Remixer</h1>
+            </div>
+            <p class="subtitle">Instrumental + Acapella = Einzigartiger Remix</p>
+        </header>
+
+        <!-- INFOBOX -->
+        <div class="infobox" id="infobox">
+            <div class="infobox-header">
+                <span class="infobox-icon">ℹ️</span>
+                <span class="infobox-title">YouTube-Integration</span>
+                <span class="infobox-status" id="youtubeStatus">⚪ Prüfe...</span>
+            </div>
+            <div class="infobox-body">
+                <p class="infobox-text">
+                    Lade <strong>Instrumentals</strong> und <strong>Acapellas</strong> direkt von YouTube.
+                    <span class="infobox-note">(yt-dlp + FFmpeg erforderlich)</span>
+                </p>
+                <div class="youtube-input-group">
+                    <input type="text" id="youtubeInput" placeholder="https://youtube.com/watch?v=...">
+                    <select id="youtubeTarget">
+                        <option value="inst">🎵 Instrumental</option>
+                        <option value="vocal">🎤 Acapella</option>
+                    </select>
+                    <button onclick="loadFromYouTube()">⬇️ Laden</button>
+                </div>
+                <div id="youtubeFeedback" class="youtube-feedback"></div>
+            </div>
+        </div>
+
+        <!-- UPLOAD SECTION -->
+        <div class="upload-section">
+            <div class="upload-box" id="uploadInst">
+                <div class="upload-icon">🎵</div>
+                <div class="upload-label">Instrumental (Song A)</div>
+                <div class="upload-filename" id="filenameInst">Kein Instrumental</div>
+                <div class="upload-bpm" id="bpmInst">BPM: --</div>
+                <input type="file" id="fileInst" accept="audio/*">
+            </div>
+            <div class="upload-box" id="uploadVocal">
+                <div class="upload-icon">🎤</div>
+                <div class="upload-label">Acapella (Song B)</div>
+                <div class="upload-filename" id="filenameVocal">Keine Acapella</div>
+                <div class="upload-bpm" id="bpmVocal">BPM: --</div>
+                <input type="file" id="fileVocal" accept="audio/*">
+            </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="controls">
+            <div class="control-group">
+                <label>🎚️ Vocal-Lautstärke</label>
+                <input type="range" id="vocalVolume" min="0" max="200" value="100">
+                <span class="control-value" id="vocalValue">100%</span>
+            </div>
+            <div class="control-group">
+                <label>🎚️ Instrumental-Lautstärke</label>
+                <input type="range" id="instVolume" min="0" max="200" value="80">
+                <span class="control-value" id="instValue">80%</span>
+            </div>
+            <div class="control-group">
+                <label>🎵 Ziel-Tempo (BPM)</label>
+                <input type="range" id="targetBPM" min="60" max="180" value="120">
+                <span class="control-value" id="bpmValue">120 BPM</span>
+            </div>
+        </div>
+
+        <!-- BPM INFO MIT MANUELLER KORREKTUR -->
+<div class="bpm-info" id="bpmInfo">
+    <span id="instBpmDisplay">🔵 Instrumental: -- BPM</span>
+    <span id="vocalBpmDisplay">🔴 Acapella: -- BPM</span>
+    <span id="tempoMatch" style="color:#4ecdc4;">⏱️ --</span>
+</div>
+
+<!-- 🔥 NEU: Manuelle BPM-Korrektur -->
+<div class="bpm-manual">
+    <div class="bpm-manual-group">
+        <label>Instrumental BPM:</label>
+        <input type="number" id="bpmInputInst" value="120" min="60" max="180">
+        <button onclick="setManualBPM('inst')">Setzen</button>
+    </div>
+    <div class="bpm-manual-group">
+        <label>Acapella BPM:</label>
+        <input type="number" id="bpmInputVocal" value="120" min="60" max="180">
+        <button onclick="setManualBPM('vocal')">Setzen</button>
+    </div>
+    <div class="bpm-manual-group">
+        <button id="tempoToggle" onclick="toggleOriginalTempo()" style="padding:0.3rem 1rem;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;cursor:pointer;font-size:0.8rem;">
+            🔓 Tempo anpassen
+        </button>
+    </div>
+</div>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+            <button class="remix-btn" id="remixBtn" onclick="createRemix()">
+                🎛️ Remix erstellen
+            </button>
+            <button class="reset-btn" onclick="resetAll()">
+                🔄 Zurücksetzen
+            </button>
+        </div>
+
+        <!-- STATUS -->
+        <div id="status" class="status">Lade Instrumental + Acapella für deinen Remix</div>
+
+        <!-- WAVEFORM -->
+        <div class="waveform" id="waveform"></div>
+
+        <!-- PLAYER -->
+        <div class="player" id="player" style="display:none;">
+            <div class="player-title">🎧 Remix abspielen</div>
+            <audio id="audioPlayer" controls></audio>
+            <button class="download-btn" onclick="downloadRemix()">
+                📥 Remix herunterladen (WAV)
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

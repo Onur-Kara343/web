@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 Finanz-Tracker | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard-header">
+            <h1><i class="fas fa-chart-line"></i> Finanz-Tracker</h1>
+            <div class="user-info">
+                <span>Hallo, <span id="username"></span>!</span>
+                <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Abmelden</button>
+            </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card income-card">
+                <div class="kpi-icon">📈</div>
+                <div class="kpi-info">
+                    <span class="kpi-label">Einnahmen</span>
+                    <span class="kpi-value" id="total-income">0,00 €</span>
+                </div>
+            </div>
+            <div class="kpi-card expense-card">
+                <div class="kpi-icon">📉</div>
+                <div class="kpi-info">
+                    <span class="kpi-label">Ausgaben</span>
+                    <span class="kpi-value" id="total-expense">0,00 €</span>
+                </div>
+            </div>
+            <div class="kpi-card balance-card">
+                <div class="kpi-icon">💰</div>
+                <div class="kpi-info">
+                    <span class="kpi-label">Kontostand</span>
+                    <span class="kpi-value" id="balance">0,00 €</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monatsauswahl -->
+        <div class="month-selector">
+            <button id="prev-month" class="month-nav">◀</button>
+            <span id="current-month" class="current-month"></span>
+            <button id="next-month" class="month-nav">▶</button>
+        </div>
+
+<!-- Diagramm -->
+<div class="chart-card">
+    <div class="card-header">
+        <h2>📊 Ausgaben nach Kategorie</h2>
+        <button id="export-csv-btn" class="icon-btn-small">📥 CSV Export</button>
+    </div>
+    <canvas id="expense-chart" style="max-height: 300px;"></canvas>
+</div>
+
+<!-- Sparbuch -->
+<div class="savings-card">
+    <div class="card-header">
+        <h2><i class="fas fa-piggy-bank"></i> Sparbuch</h2>
+        <button id="add-savings-btn" class="btn-primary-small">➕ Neues Sparbuch</button>
+    </div>
+    <div id="savings-list" class="savings-list">
+        <div class="loading">Lade Sparbücher...</div>
+    </div>
+</div>
+
+        <!-- KI-Tipp -->
+        <div class="ai-tip-card">
+            <div class="card-header">
+                <h2><i class="fas fa-robot"></i> KI-Spartipp</h2>
+                <button id="refresh-tip-btn" class="icon-btn-small"><i class="fas fa-sync-alt"></i></button>
+            </div>
+            <div id="ai-tip" class="ai-tip">
+                <i class="fas fa-lightbulb"></i>
+                <span>Lade Tipp...</span>
+            </div>
+        </div>
+
+        <!-- Transaktion hinzufügen -->
+        <div class="form-card">
+            <h2>➕ Neue Transaktion</h2>
+            <form id="transaction-form" class="transaction-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Betrag (€)</label>
+                        <input type="number" id="amount" step="0.01" placeholder="z.B. 49,99" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Typ</label>
+                        <select id="type" class="type-select">
+                            <option value="income">📈 Einnahme</option>
+                            <option value="expense">📉 Ausgabe</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Kategorie</label>
+                        <div class="category-select-wrapper">
+                            <select id="category-id"></select>
+                            <button type="button" id="add-category-btn" class="icon-btn" title="Neue Kategorie">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Beschreibung</label>
+                        <input type="text" id="description" placeholder="Was hast du gekauft?">
+                    </div>
+                    <div class="form-group">
+                        <label>Datum</label>
+                        <input type="date" id="date">
+                    </div>
+                    <div class="form-group submit-group">
+                        <button type="submit" class="btn-primary">➕ Hinzufügen</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Transaktionsliste -->
+        <div class="transactions-card">
+            <h2>📋 Letzte Transaktionen</h2>
+            <div class="table-container">
+                <table id="transactions-table">
+                    <thead>
+                        <tr><th>Datum</th><th>Kategorie</th><th>Beschreibung</th><th>Betrag</th><th>Aktion</th> </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            <p>💰 Finanz-Tracker | Spar-Challenges | KI-Tipps</p>
+        </footer>
+    </div>
+
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+# Node Modules
+node_modules/
+npm-debug.log
+
+# Docker
+*.log
+*.pid
+
+# System
+.DS_Store
+Thumbs.db
+*.swp
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Build
+dist/
+build/
+*.gz

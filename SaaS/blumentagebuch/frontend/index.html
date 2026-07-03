@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Blumentagebuch - Meine Blumenwelt</title>
+    
+    <!-- FAVICON - BEIDE VARIANTEN -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="shortcut icon" href="favicon.ico">
+    
+    <link rel="stylesheet" href="style.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Glitzer-Partikel Hintergrund -->
+    <div id="particles-container"></div>
+    
+    <!-- Hauptcontainer -->
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Mein Blumentagebuch - Ilaydoss</h1>
+            <p class="subtitle">✨ Ein magisches Buch voller Blumenwunder ✨</p>
+        </header>
+
+        <!-- Suche -->
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="search-input" 
+                placeholder="🔍 Suche nach einer Blume..."
+                class="search-input"
+            >
+            <button id="search-btn" class="search-btn">Suchen</button>
+            <button id="reset-btn" class="reset-btn">✨ Alle anzeigen</button>
+        </div>
+
+        <!-- Blume des Tages -->
+        <div class="flower-of-the-day" id="flower-of-the-day">
+            <div class="section-title">
+                <span>🌟</span> Blume des Tages <span>🌟</span>
+            </div>
+            <div id="daily-flower-content" class="daily-flower-content">
+                <div class="loading">🌺 Lade Blume des Tages...</div>
+            </div>
+        </div>
+
+        <!-- Blumen-Galerie -->
+        <div class="gallery-section">
+            <div class="section-title">
+                <span>🌸</span> Alle Blumen <span>🌸</span>
+            </div>
+            <div id="flower-grid" class="flower-grid">
+                <div class="loading">🌿 Lade Blumen...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal für Detailansicht -->
+    <div id="flower-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-body">
+                <div class="loading">🌺 Lade Details...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FootRank - Fußball-Performance-Bewertung</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>FootRank</h1>
+            </div>
+            <p class="subtitle">Positions-spezifische Performance-Bewertung · <span id="statCount">0</span> Stats</p>
+        </header>
+
+        <!-- SPIELZEIT -->
+        <div class="time-section">
+            <div class="time-input-group">
+                <label>⏱️ Spieldauer</label>
+                <input type="number" id="matchDuration" value="90" min="1" max="120">
+                <span class="time-unit">min</span>
+            </div>
+            <div class="time-input-group">
+                <label>⏱️ Eigene Spielzeit</label>
+                <input type="number" id="ownMinutes" value="90" min="0" max="120">
+                <span class="time-unit">min</span>
+            </div>
+            <div class="time-info" id="timeInfo">
+                <span class="time-badge">🟢 Volle Spielzeit</span>
+            </div>
+        </div>
+
+        <!-- POSITIONEN -->
+        <div class="position-selector" id="positionSelector"></div>
+
+        <!-- STATS - HIER KOMMEN DIE EINGABEFELDER -->
+        <div class="stats-grid" id="statsGrid"></div>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+            <button class="evaluate-btn" onclick="openResult()">
+                📊 Performance bewerten
+            </button>
+            <button class="reset-btn" onclick="resetStats()">🔄 Zurücksetzen</button>
+        </div>
+
+        <div class="info-footer">
+            <span>⚡ 80/20 Gewichtung pro Stat</span>
+                <span>------</span>
+            <span>🎯 Kategorien-gewichtete Bewertung</span>
+        </div>
+    </div>
+
+    <!-- RESULT OVERLAY -->
+    <div class="result-overlay" id="resultOverlay">
+        <div class="result-container">
+            <div class="result-header">
+                <div class="logo">
+                    <span class="logo-icon">📊</span>
+                    <h2>Bewertung</h2>
+                </div>
+                <button class="close-btn" onclick="closeResult()">✕</button>
+            </div>
+            <div class="result-content" id="resultContent"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

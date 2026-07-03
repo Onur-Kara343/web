@@ -1,0 +1,29 @@
+services:
+  backend:
+    build: ./backend
+    container_name: blumentagebuch-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - blumentagebuch-network
+
+  frontend:
+    build: ./frontend
+    container_name: blumentagebuch-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - blumentagebuch-network
+
+networks:
+  blumentagebuch-network:
+    driver: bridge
