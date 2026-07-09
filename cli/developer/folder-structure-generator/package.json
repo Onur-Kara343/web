@@ -1,0 +1,22 @@
+{
+  "name": "@dev-tools/folder-structure-generator",
+  "version": "1.0.0",
+  "description": "Generate folder structures with custom templates",
+  "main": "lib/generator.js",
+  "bin": {
+    "folder-gen": "./bin/index.js"
+  },
+  "scripts": {
+    "start": "node bin/index.js"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "inquirer": "^8.2.5",
+    "chalk": "^4.1.2",
+    "fs-extra": "^11.1.1",
+    "tree-kit": "^0.7.4"
+  },
+  "keywords": ["cli", "folder", "structure", "generator"],
+  "author": "Your Name",
+  "license": "MIT"
+}

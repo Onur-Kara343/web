@@ -1,0 +1,21 @@
+{
+  "name": "@dev-tools/readme-generator",
+  "version": "1.0.0",
+  "description": "README.md file generator CLI tool",
+  "main": "lib/generator.js",
+  "bin": {
+    "readme-gen": "./bin/index.js"
+  },
+  "scripts": {
+    "start": "node bin/index.js"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "inquirer": "^8.2.5",
+    "chalk": "^4.1.2",
+    "fs-extra": "^11.1.1"
+  },
+  "keywords": ["cli", "readme", "generator"],
+  "author": "Your Name",
+  "license": "MIT"
+}

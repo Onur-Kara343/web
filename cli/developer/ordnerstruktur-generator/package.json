@@ -1,8 +1,0 @@
-{
-  "name": "create-my-structure",
-  "version": "1.0.0",
-  "bin": {
-    "ord": "./index.js"
-  },
-  "type": "module"
-}

@@ -1,0 +1,22 @@
+{
+  "name": "@dev-tools/pr-summary",
+  "version": "1.0.0",
+  "description": "PR summary generator CLI tool",
+  "main": "lib/generator.js",
+  "bin": {
+    "pr-summary": "./bin/index.js"
+  },
+  "scripts": {
+    "start": "node bin/index.js"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "inquirer": "^8.2.5",
+    "chalk": "^4.1.2",
+    "fs-extra": "^11.1.1",
+    "simple-git": "^3.19.0"
+  },
+  "keywords": ["cli", "pr", "summary", "github"],
+  "author": "Your Name",
+  "license": "MIT"
+}
