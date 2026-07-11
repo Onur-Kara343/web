@@ -1,0 +1,17 @@
+{
+    "name": "Inner Control System",
+    "short_name": "Inner Control",
+    "description": "Vom inneren Chaos zur souveränen Präsenz - Meistere deine Gedanken, Emotionen und Ausstrahlung",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0a0f",
+    "theme_color": "#1a1a2e",
+    "icons": [
+        {
+            "src": "/assets/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ]
+}

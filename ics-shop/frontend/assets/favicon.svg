@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4ecdc4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Dreieck außen -->
+  <polygon points="50,10 90,75 10,75" fill="none" stroke="url(#grad)" stroke-width="3"/>
+  <!-- Krone -->
+  <path d="M35 65 L38 45 L45 52 L50 40 L55 52 L62 45 L65 65 Z" fill="none" stroke="url(#grad)" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Löwenkopf -->
+  <circle cx="50" cy="72" r="8" fill="none" stroke="url(#grad)" stroke-width="2"/>
+</svg>

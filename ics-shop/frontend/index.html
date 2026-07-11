@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inner Control System</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.svg">
+    <link rel="manifest" href="/assets/site.webmanifest">
+    <meta name="theme-color" content="#1a1a2e">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <svg width="180" height="50" viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ff6b6b" stop-opacity="1" />
+                            <stop offset="100%" stop-color="#4ecdc4" stop-opacity="1" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="0" y="0" width="50" height="50" rx="10" fill="none" stroke="url(#grad)" stroke-width="2"/>
+                    <polygon points="25,8 45,42 5,42" fill="none" stroke="url(#grad)" stroke-width="2"/>
+                    <path d="M15 38 L17 28 L22 32 L25 25 L28 32 L33 28 L35 38 Z" fill="none" stroke="url(#grad)" stroke-width="1.8"/>
+                    <circle cx="25" cy="42" r="5" fill="none" stroke="url(#grad)" stroke-width="1.5"/>
+                    <text x="60" y="32" font-size="18" fill="#fff" font-family="Inter, Arial, sans-serif" font-weight="700">INNER</text>
+                    <text x="60" y="46" font-size="12" fill="#4ecdc4" font-family="Inter, Arial, sans-serif" font-weight="500" letter-spacing="1">CONTROL</text>
+                </svg>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Home</a>
+                <a href="#" class="nav-link" data-page="shop"><i class="fas fa-shopping-cart"></i> Shop</a>
+                <a href="#" class="nav-link" data-page="library" id="libraryLink" style="display:none"><i class="fas fa-book-open"></i> Bibliothek</a>
+                <a href="#" id="authBtn" class="btn-auth"><i class="fas fa-user"></i> Login</a>
+                <span id="userEmail" class="user-email" style="display:none"><i class="fas fa-user-circle"></i> <span id="userName"></span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main id="mainContent">
+        <!-- ============ HOME PAGE ============ -->
+        <div id="homePage" class="page active">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1>Die meisten Menschen scheitern nicht, weil sie zu wenig wissen –</h1>
+                        <p class="hero-subtitle">sondern weil sie keine Kontrolle über sich selbst haben.</p>
+                        <div class="hero-buttons">
+                            <button onclick="navigateToShop()" class="btn btn-primary btn-large">
+                                <i class="fas fa-fire"></i> Jetzt System entdecken
+                            </button>
+                            <button onclick="scrollToFreeEbook()" class="btn btn-outline btn-large">
+                                <i class="fas fa-gift"></i> Kostenlose eBooks
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Problem Section -->
+            <section class="problem-solution">
+                <div class="container">
+                    <div class="problem-box">
+                        <div class="problem-icon"><i class="fas fa-brain"></i></div>
+                        <h3><i class="fas fa-exclamation-triangle"></i> Das Problem</h3>
+                        <ul>
+                            <li><i class="fas fa-comment-dots"></i> Du overthinkst – dein Kopf ist lauter als deine Stimme</li>
+                            <li><i class="fas fa-user-friends"></i> Deine Ausstrahlung ist nicht das, was du fühlst</li>
+                            <li><i class="fas fa-trophy"></i> Du willst respektiert werden – aber es fehlt Präsenz</li>
+                            <li><i class="fas fa-search"></i> Du verstehst Menschen nicht wirklich</li>
+                        </ul>
+                    </div>
+                    <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="solution-box">
+                        <div class="solution-icon"><i class="fas fa-fire"></i></div>
+                        <h3><i class="fas fa-check-circle"></i> Die Lösung</h3>
+                        <h4>INNER CONTROL SYSTEM</h4>
+                        <p>Vom inneren Chaos zur souveränen Präsenz</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section class="features">
+                <div class="container">
+                    <div class="section-header">
+                        <span class="section-tag"><i class="fas fa-star"></i> Warum funktioniert es?</span>
+                        <h2>Das Besondere am Inner Control System</h2>
+                    </div>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                            <h3>Psychologisch fundiert</h3>
+                            <p>Basierend auf moderner Neurowissenschaft und Verhaltenspsychologie</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                            <h3>Sofort anwendbar</h3>
+                            <p>Keine Theorie – praktische Übungen für den Alltag</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                            <h3>Fortschritt sichtbar</h3>
+                            <p>Mit unseren WebApps trackst du deine Entwicklung</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+                            <h3>Phasenweise Struktur</h3>
+                            <p>Jede Phase baut auf der vorherigen auf</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6 Sichtweisen -->
+            <section class="insights">
+                <div class="container">
+                    <div class="section-header">
+                        <span class="section-tag"><i class="fas fa-brain"></i> Mentale Modelle</span>
+                        <h2>6 Sichtweisen, die dein Leben verändern</h2>
+                    </div>
+                    <div class="insights-grid">
+                        <div class="insight-item"><i class="fas fa-quote-left"></i> Erwartungen sind geplante Enttäuschungen.</div>
+                        <div class="insight-item"><i class="fas fa-quote-left"></i> Nicht alles, was du fühlst, ist wahr.</div>
+                        <div class="insight-item"><i class="fas fa-quote-left"></i> Du musst nicht gemocht werden. Du musst echt sein.</div>
+                        <div class="insight-item"><i class="fas fa-quote-left"></i> Stillstand fühlt sich an wie Sicherheit, ist aber Risiko.</div>
+                        <div class="insight-item"><i class="fas fa-quote-left"></i> Vergleich ist Diebstahl von Freude.</div>
+                        <div class="insight-item"><i class="fas fa-quote-left"></i> Kontrolle über andere ist eine Illusion. Kontrolle über dich ist die einzige echte Macht.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 10 Perspektivwechsel -->
+            <section class="perspectives">
+                <div class="container">
+                    <div class="section-header">
+                        <span class="section-tag"><i class="fas fa-bolt"></i> Bevor du beginnst</span>
+                        <h2>10 Perspektivwechsel, die dein Denken verändern</h2>
+                        <p>Lies das hier einmal bewusst – es öffnet dir die Augen</p>
+                    </div>
+                    <div class="perspectives-grid">
+                        <div class="perspective-card">
+                            <span class="quote-icon">"</span>
+                            <p>Du musst nicht „mehr Selbstvertrauen“ bekommen – du musst aufhören, dich selbst zu hinterfragen.</p>
+                        </div>
+                        <div class="perspective-card">
+                            <span class="quote-icon">"</span>
+                            <p>Charisma ist keine angeborene Gabe – es ist Abwesenheit von innerem Krieg.</p>
+                        </div>
+                        <div class="perspective-card">
+                            <span class="quote-icon">"</span>
+                            <p>Andere kontrollieren wollen ist schwach. Dich selbst kontrollieren können ist Macht.</p>
+                        </div>
+                        <div class="perspective-card">
+                            <span class="quote-icon">"</span>
+                            <p>Niemand denkt über dich nach. Alle denken über sich nach. Das ist deine Chance.</p>
+                        </div>
+                        <div class="perspective-card">
+                            <span class="quote-icon">"</span>
+                            <p>Du verlierst nicht, weil du zu leise bist – sondern weil du zu laut in deinem Kopf bist.</p>
+                        </div>
+                        <div class="perspective-card">
+                            <span class="quote-icon">"</span>
+                            <p>Respekt bekommst du nicht durch Perfektion, sondern durch Kongruenz.</p>
+                        </div>
+                        <div class="perspective-card">
+                            <span class="quote-icon">"</span>
+                            <p>Wenn du eine starke Ausstrahlung willst, hör auf zu wirken – fang an zu sein.</p>
+                        </div>
+                        <div class="perspective-card">
+                            <span class="quote-icon">"</span>
+                            <p>Emotionale Stabilität bedeutet nicht, nichts zu fühlen – sondern deine Gefühle nicht mehr dein Chef sein zu lassen.</p>
+                        </div>
+                        <div class="perspective-card">
+                            <span class="quote-icon">"</span>
+                            <p>Dein Umfeld spiegelt deine innere Ordnung. Chaos außen = Chaos innen.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BONUS-TOOLS (NUR HIER AUF DER HOMEPAGE) -->
+            <section class="bonus-tools" id="bonusToolsSection">
+                <div class="container">
+                    <div class="bonus-header">
+                        <span class="bonus-badge"><i class="fas fa-gift"></i> Kostenloser Bonus</span>
+                        <h2>5 Tools für deine tägliche Entwicklung</h2>
+                        <p>Völlig unabhängig vom Inner Control System – Immer frei zugänglich</p>
+                    </div>
+                    <div class="bonus-grid" id="bonusToolsGrid">
+                        <!-- Wird von main.js geladen -->
+                    </div>
+                    <p class="bonus-note"><i class="fas fa-info-circle"></i> Diese Tools sind komplett unabhängig und immer kostenlos – Kein Kauf nötig</p>
+                </div>
+            </section>
+
+             <!-- Call to Action -->
+            <section class="cta-section">
+                <div class="container">
+                    <div class="cta-content">
+                        <h2><i class="fas fa-rocket"></i> Bereit für deine Transformation?</h2>
+                        <p>Starte noch heute mit dem Inner Control System</p>
+                        <button onclick="navigateToShop()" class="btn btn-primary btn-large">
+                            <i class="fas fa-fire"></i> Jetzt starten
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============ SHOP PAGE ============ -->
+        <div id="shopPage" class="page">
+            <div class="container">
+                <!-- Phase Roadmap -->
+                <section class="phases">
+                    <div class="container">
+                        <div class="section-header">
+                            <span class="section-tag"><i class="fas fa-road"></i> Der Fahrplan</span>
+                            <h2>Deine Reise in 5 Phasen</h2>
+                        </div>
+                        <div class="phase-timeline">
+                            <div class="phase-step">
+                                <div class="phase-number">1</div>
+                                <div class="phase-content">
+                                    <h3><i class="fas fa-brain"></i> Inner Control</h3>
+                                    <p>Gedanken & Emotionen steuern</p>
+                                </div>
+                            </div>
+                            <div class="phase-step">
+                                <div class="phase-number">2</div>
+                                <div class="phase-content">
+                                    <h3><i class="fas fa-user-astronaut"></i> Presence</h3>
+                                    <p>Ausstrahlung & Ruhe aufbauen</p>
+                                </div>
+                            </div>
+                            <div class="phase-step">
+                                <div class="phase-number">3</div>
+                                <div class="phase-content">
+                                    <h3><i class="fas fa-users"></i> Human Understanding</h3>
+                                    <p>Menschen lesen wie ein System</p>
+                                </div>
+                            </div>
+                            <div class="phase-step">
+                                <div class="phase-number">4</div>
+                                <div class="phase-content">
+                                    <h3><i class="fas fa-crown"></i> Power</h3>
+                                    <p>Tiefe Beziehungen + Dunkle Psychologie</p>
+                                </div>
+                            </div>
+                            <div class="phase-step premium">
+                                <div class="phase-number">5</div>
+                                <div class="phase-content">
+                                    <h3><i class="fas fa-crown"></i> Mastery <i class="fas fa-star"></i></h3>
+                                    <p>Die vollständige Meisterschaft über die Psyche</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pricing Tiers -->
+                <section class="pricing">
+                    <div class="container">
+                        <div class="section-header">
+                            <span class="section-tag"><i class="fas fa-tag"></i> Wähle dein Paket</span>
+                            <h2>Investiere in dich selbst</h2>
+                        </div>
+                        <div class="pricing-grid">
+                            <!-- Basic -->
+                            <div class="pricing-card">
+                                <div class="pricing-badge basic"><i class="fas fa-seedling"></i> BASIC</div>
+                                <div class="pricing-price">39€</div>
+                                <div class="pricing-duration">einmalig</div>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> eBooks Phase 1–2 (PDF)</li>
+                                    <li><i class="fas fa-infinity"></i> Lebenslanger Zugriff</li>
+                                </ul>
+                                <button class="btn btn-pricing" onclick="handlePurchase('basic')">
+                                    <i class="fas fa-shopping-cart"></i> Jetzt wählen
+                                </button>
+                            </div>
+                            
+                            <!-- Advanced (Empfohlen) -->
+                            <div class="pricing-card featured">
+                                <div class="recommended-badge"><i class="fas fa-star"></i> EMPFOHLEN</div>
+                                <div class="pricing-badge advanced"><i class="fas fa-rocket"></i> ADVANCED</div>
+                                <div class="pricing-price">59€</div>
+                                <div class="pricing-duration">einmalig</div>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> eBooks Phase 1–4 (PDF)</li>
+                                    <li><i class="fas fa-infinity"></i> Lebenslanger Zugriff</li>              
+                                </ul>
+                                <button class="btn btn-pricing btn-featured" onclick="handlePurchase('advanced')">
+                                    <i class="fas fa-crown"></i> Jetzt wählen
+                                </button>
+                            </div>
+                            
+                            <!-- Full System -->
+                            <div class="pricing-card">
+                                <div class="pricing-badge full"><i class="fas fa-gem"></i> FULL SYSTEM</div>
+                                <div class="pricing-price">79€</div>
+                                <div class="pricing-duration">einmalig</div>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> Alle eBooks Phase 1–4</li>
+                                    <li><i class="fas fa-diamond"></i> Mastery-Modul</li>
+                                    <li><i class="fas fa-infinity"></i> Lebenslanger Zugriff</li>
+                                </ul>
+                                <button class="btn btn-pricing" onclick="handlePurchase('full')">
+                                    <i class="fas fa-gem"></i> Jetzt wählen
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- ============ LIBRARY PAGE ============ -->
+        <div id="libraryPage" class="page">
+            <div class="container">
+
+                <!-- FREE EBOOKS BEREICH (JETZT IN DER BIBLIOTHEK) -->
+                <section class="free-ebook-section" id="free-ebook-section">
+                    <div class="free-ebook-container">
+                        <div class="free-ebook-header">
+                            <span class="free-badge"><i class="fas fa-star"></i> KOSTENLOS</span>
+                            <h2>Deine kostenlosen eBooks</h2>
+                            <p>Lade dir jetzt deine 3 kostenlosen eBooks herunter</p>
+                        </div>
+                        
+                        <div class="free-ebooks-grid">
+                            <!-- eBook 1: Die Stille im Raum -->
+                            <div class="free-ebook-card">
+                                <div class="free-ebook-icon"><i class="fas fa-book"></i></div>
+                                <h3>„Die Stille im Raum“</h3>
+                                <p>Das Gefühl der Leere und Einsamkeit..</p>
+                                <div class="free-ebook-features">
+                                    <span><i class="fas fa-download"></i> Sofortiger Download</span>
+                                    <span><i class="fas fa-file-alt"></i>8 Kapitel</span>
+                                </div>
+                                <form class="free-ebook-form" onsubmit="handleFreeEbookDownload(event)">
+                                    <input type="email" placeholder="Deine E-Mail-Adresse" required>
+                                    <button type="submit" class="btn btn-secondary">
+                                        <i class="fas fa-download"></i> Jetzt downloaden
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- eBook 2: Tiefencode -->
+                            <div class="free-ebook-card">
+                                <div class="free-ebook-icon"><i class="fas fa-code"></i></div>
+                                <h3>„Tiefencode“</h3>
+                                <p>Programmiere dein Unterbewusstsein neu – Die geheimen Skripte deiner Psyche</p>
+                                <div class="free-ebook-features">
+                                    <span><i class="fas fa-download"></i> Sofortiger Download</span>
+                                    <span><i class="fas fa-file-alt"></i> 11 Kapitel</span>
+                                </div>
+                                <form class="free-ebook-form" onsubmit="handleFreeEbookDownload(event)">
+                                    <input type="email" placeholder="Deine E-Mail-Adresse" required>
+                                    <button type="submit" class="btn btn-secondary">
+                                        <i class="fas fa-download"></i> Jetzt downloaden
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- eBook 3: Hardware Update -->
+                            <div class="free-ebook-card">
+                                <div class="free-ebook-icon"><i class="fas fa-microchip"></i></div>
+                                <h3>„Hardware Update“</h3>
+                                <p>Optimiere dein mentales Betriebssystem für maximale Performance</p>
+                                <div class="free-ebook-features">
+                                    <span><i class="fas fa-download"></i> Sofortiger Download</span>
+                                    <span><i class="fas fa-file-alt"></i> 12 Kapitel</span>
+                                </div>
+                                <form class="free-ebook-form" onsubmit="handleFreeEbookDownload(event)">
+                                    <input type="email" placeholder="Deine E-Mail-Adresse" required>
+                                    <button type="submit" class="btn btn-secondary">
+                                        <i class="fas fa-download"></i> Jetzt downloaden
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <p class="free-ebook-note"><i class="fas fa-envelope"></i> Du erhältst den Download-Link sofort per E-Mail</p>
+                    </div>
+                </section>
+
+                <!-- PAID EBOOKS BEREICH -->
+                <div class="section-header" style="margin-top: 60px;">
+                    <span class="section-tag"><i class="fas fa-book-open"></i> Deine Sammlung</span>
+                    <h2>Meine gekauften eBooks</h2>
+                    <p>Hier findest du alle deine gekauften eBooks</p>
+                </div>
+                <div id="libraryContainer" class="library-container"></div>
+
+                    <!-- ====== HINWEIS ZU DEN EBOOKS ====== -->
+        <div class="library-intro">
+            <div class="library-intro-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="library-intro-content">
+                <h3>📖 So holst du das Maximum aus deinen eBooks raus</h3>
+                <p>
+                    Meine eBooks bestehen aus vielen <strong>kurzen, prägnanten Kapiteln</strong> – 
+                    jedes davon ist bewusst kompakt gehalten, damit du es <strong>wirklich verstehst</strong> 
+                    und nicht nur überfliegst.
+                </p>
+                <p>
+                    <strong>Mein Tipp:</strong> Lies nicht einfach alles durch, sondern <strong>wende an, 
+                    was du gelesen hast</strong>. Mach eine Pause nach jedem Buch, setze 1–2 Dinge um 
+                    und <strong>starte erst dann das nächste</strong>. So baust du echtes Wissen auf – 
+                    nicht nur Theorie!
+                </p>
+                <div class="library-intro-tags">
+                    <span class="tag"><i class="fas fa-check-circle"></i> Kurze Kapitel</span>
+                    <span class="tag"><i class="fas fa-check-circle"></i> Praxisnah</span>
+                    <span class="tag"><i class="fas fa-check-circle"></i> Zum Anwenden</span>
+                    <span class="tag"><i class="fas fa-check-circle"></i> Nicht überstürzen</span>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal" style="display:none">
+        <div class="modal-content">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <div id="loginForm">
+                <h2><i class="fas fa-hand-peace"></i> Willkommen zurück!</h2>
+                <p>Melde dich an, um auf deine eBooks & WebApps zuzugreifen</p>
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password">
+                <button class="btn btn-primary btn-block" onclick="handleLogin()">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <p class="modal-footer-text">
+                    Noch kein Konto? <a href="#" onclick="toggleAuthForms('register')">
+                        <i class="fas fa-user-plus"></i> Jetzt kostenlos registrieren
+                    </a>
+                </p>
+            </div>
+            <div id="registerForm" style="display:none">
+                <h2><i class="fas fa-gift"></i> Kostenloses eBook geschenkt!</h2>
+                <p>Registriere dich und erhalte sofort „Der eine Schalter“ kostenlos</p>
+                <input type="email" id="registerEmail" placeholder="Email" required>
+                <input type="password" id="registerPassword" placeholder="Password (optional)">
+                <button class="btn btn-primary btn-block" onclick="handleRegister()">
+                    <i class="fas fa-user-check"></i> Kostenlos registrieren
+                </button>
+                <p class="modal-footer-text">
+                    Bereits registriert? <a href="#" onclick="toggleAuthForms('login')">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
