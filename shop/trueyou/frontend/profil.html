@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrueYou – Mein Profil</title>
+    <link rel="stylesheet" href="css/profil.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="profil-container">
+        <!-- Header -->
+        <header class="profil-header">
+            <div class="header-content">
+                <button id="back-to-dashboard" class="back-btn" onclick="window.location.href='index.html'">
+                    ← Zurück zu den Tests
+                </button>
+                <div class="user-info">
+                    <span id="user-name" class="user-name">User</span>
+                    <span id="premium-badge" class="premium-badge" style="display:none">⭐ PREMIUM</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="profil-main">
+            <div class="profil-hero">
+                <div class="hero-icon">👤</div>
+                <h1>Mein Profil</h1>
+                <p>Hier findest du alle deine gespeicherten Testergebnisse im Überblick</p>
+            </div>
+
+            <!-- Statistik Karten -->
+            <div class="stats-grid" id="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value" id="total-tests">0</div>
+                    <div class="stat-label">Abgeschlossene Tests</div>
+                </div>
+            </div>
+
+            <!-- Ergebnisse Liste -->
+            <div class="results-section">
+                <div class="section-header">
+                    <h2>📋 Deine Testergebnisse</h2>
+                    <p>Klicke auf ein Ergebnis, um Details zu sehen</p>
+                </div>
+                <div id="profile-results-list" class="results-list">
+                    <!-- Wird dynamisch geladen -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="profil-footer">
+            <p>🔍 TrueYou – Entdecke wer du wirklich bist</p>
+        </footer>
+    </div>
+
+    <script type="module" src="js/profil.js"></script>
+</body>
+</html>

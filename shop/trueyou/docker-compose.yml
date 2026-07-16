@@ -1,0 +1,46 @@
+version: '3.9'
+services:
+  trueyou_db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: trueyou
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+  trueyou_backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - trueyou_db
+    ports:
+      - '5003:5003'
+    environment:
+      NODE_ENV: development
+      PORT: 5003
+      DB_HOST: trueyou_db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: trueyou
+      JWT_SECRET: change-me
+      FRONTEND_URL: http://localhost:3003
+      LEMONSQUEEZY_API_KEY: ''
+      LEMONSQUEEZY_STORE_ID: ''
+      LEMONSQUEEZY_VARIANT_ID: ''
+      LEMONSQUEEZY_WEBHOOK_SECRET: ''
+    restart: unless-stopped
+  trueyou_frontend:
+    image: nginx:stable-alpine
+    depends_on:
+      - trueyou_backend
+    ports:
+      - '3003:80'
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    restart: unless-stopped
+volumes:
+  db_data:

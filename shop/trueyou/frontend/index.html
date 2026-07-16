@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrueYou – Persönlichkeitstests</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- AUTH VIEW -->
+        <div id="auth-view" class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <img src="assets/logo.svg" alt="TrueYou Icon" class="auth-logo">
+                    <h1>TrueYou</h1>
+                    <p>Entdecke wer du wirklich bist – mit 15 wissenschaftlich fundierten Persönlichkeitstests</p>
+                </div>
+                
+                <div id="login-form" class="auth-form">
+                    <div class="input-group">
+                        <input type="email" id="login-email" placeholder="Email-Adresse">
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="login-password" placeholder="Passwort">
+                    </div>
+                    <button id="login-btn" class="btn-primary btn-block">Anmelden</button>
+                    <p class="auth-switch">Noch kein Konto? <a href="#" id="show-register">Jetzt registrieren</a></p>
+                </div>
+                
+                <div id="register-form" class="auth-form" style="display:none">
+                    <div class="input-group">
+                        <input type="text" id="register-username" placeholder="Benutzername">
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="register-email" placeholder="Email-Adresse">
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="register-password" placeholder="Passwort (min. 6 Zeichen)">
+                    </div>
+                    <button id="register-btn" class="btn-primary btn-block">Konto erstellen</button>
+                    <p class="auth-switch">Bereits registriert? <a href="#" id="show-login">Zum Login</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN VIEW -->
+        <div id="main-view" style="display:none">
+            <header class="app-header">
+                <div class="header-container">
+                    <div class="logo">
+                        <img src="assets/logo.svg" alt="TrueYou Icon" class="logo-icon">
+                        <span class="logo-text">TrueYou</span>
+                    </div>
+                    <div class="user-info">
+                        <span id="user-name" class="user-name"></span>
+                        <span id="premium-badge" class="premium-badge" style="display:none">⭐ PREMIUM</span>
+                        <button id="logout-btn" class="btn-outline">Abmelden</button>
+                       <a href="profil.html" class="btn-outline">👤 Mein Profil</a>
+                    </div>
+                </div>
+            </header>
+
+            <main class="main-content">
+                <!-- Dashboard (Test-Übersicht) -->
+                <div id="dashboard-view">
+                    <div class="hero">
+                        <h1>Entdecke deine Persönlichkeit</h1>
+                        <p>Wähle einen Test aus und erfahre mehr über dich selbst</p>
+                    </div>
+                    
+                    <div class="test-categories" id="test-categories">
+                        <!-- Wird dynamisch geladen -->
+                    </div>
+                </div>
+                <!-- Test-View -->
+                <div id="test-view" style="display:none">
+                    <div class="test-header">
+                        <button id="back-to-dashboard" class="btn-back">← Zurück zur Übersicht</button>
+                        <div class="test-progress">
+                            <span id="question-counter">Frage 1 / 30</span>
+                            <div class="progress-bar">
+                                <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="question-container"></div>
+                </div>
+
+                <!-- Ergebnis-View -->
+                <div id="result-view" style="display:none">
+                    <div class="result-header">
+                        <button id="new-test" class="btn-back">← Neuen Test machen</button>
+                    </div>
+                    <div id="result-container"></div>
+                </div>
+            </main>
+
+            <!-- Premium Banner -->
+            <div id="premium-banner" class="premium-banner" style="display:none">
+                <div class="premium-banner-content">
+                    <span>🔓 Schalte alle 15 Tests frei! (3 Free, 12 Premium)</span>
+                    <button id="upgrade-btn" class="btn-premium">💎 Premium für 9,99€</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
