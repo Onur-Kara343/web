@@ -41,7 +41,8 @@ class Ebook {
     }
     
     static async recordDownload(userId, ebookId, ipAddress) {
-        const downloadToken = require('crypto').randomBytes(32).toString('hex');
+        const crypto = require('crypto');
+        const downloadToken = crypto.randomBytes(32).toString('hex');
         await pool.query(`
             INSERT INTO user_downloads (user_id, ebook_id, download_token, ip_address) 
             VALUES ($1, $2, $3, $4)

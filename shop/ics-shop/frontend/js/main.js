@@ -96,7 +96,7 @@ async function handleRegister() {
             currentUser = { token: data.token, email: data.user.email, tier: data.user.tier };
             updateUIForLoggedInUser();
             closeAuthModal();
-            showNotification('Registrierung erfolgreich! Du erhältst dein kostenloses eBook per E-Mail.', 'success');
+            showNotification('Registrierung erfolgreich! Du erhältst deine kostenlosen eBooks per E-Mail.', 'success');
         } else {
             showNotification(data.error || 'Registrierung fehlgeschlagen', 'error');
         }
@@ -148,74 +148,12 @@ function checkAuth() {
     }
 }
 
-// ============ BONUS TOOLS (3 ANDROID APPS) ============
-async function loadBonusTools() {
-    const container = document.getElementById('bonusToolsGrid');
-    if (!container) return;
-    
-    const fallbackTools = [
-        { 
-            id: 'emora', 
-            name: 'Emora', 
-            icon: 'fa-comment-dots', 
-            description: 'Emotionsrad mit 60+ Emotionen + Chatbot + Trigger-Landkarte für deine Gefühle',
-            type: 'Android App'
-        },
-        { 
-            id: 'calmmind', 
-            name: 'CalmMind', 
-            icon: 'fa-book', 
-            description: 'Tagebuch mit Kalenderansicht, ToDos, Briefe an dein Zukunfts-Ich & KI-Reflexion',
-            type: 'Android App'
-        },
-        { 
-            id: 'dreamweaver', 
-            name: 'Dreamweaver', 
-            icon: 'fa-moon', 
-            description: 'Traumtagebuch + KI-Analyse, Lucid Dream Tipps, Schlaf-Tracking & mehr',
-            type: 'Android App'
-        }
-    ];
-    
-    try {
-        const res = await fetch(`${API_URL}/bonus-tools`);
-        
-        if (!res.ok) {
-            throw new Error(`HTTP ${res.status}`);
-        }
-        
-        const tools = await res.json();
-        
-        container.innerHTML = tools.map(tool => `
-            <div class="bonus-card coming-soon">
-                <div class="bonus-icon"><i class="fas ${tool.icon}"></i></div>
-                <h3>${tool.name} <span class="coming-badge">🔥 Bald</span></h3>
-                <p>${tool.description}</p>
-                <span class="bonus-platform"><i class="fas fa-android"></i> ${tool.type || 'Android App'}</span>
-                <span class="bonus-link disabled">In Entwicklung →</span>
-            </div>
-        `).join('');
-        
-    } catch (error) {
-        console.error('Fehler beim Laden der Bonus-Tools, zeige Fallback:', error);
-        container.innerHTML = fallbackTools.map(tool => `
-            <div class="bonus-card coming-soon">
-                <div class="bonus-icon"><i class="fas ${tool.icon}"></i></div>
-                <h3>${tool.name} <span class="coming-badge">🔥 Bald</span></h3>
-                <p>${tool.description}</p>
-                <span class="bonus-platform"><i class="fas fa-android"></i> ${tool.type}</span>
-                <span class="bonus-link disabled">In Entwicklung →</span>
-            </div>
-        `).join('');
-    }
-}
-
-// ============ FREE EBOOK DIREKT-DOWNLOAD (OHNE E-MAIL) ============
+// ============ FREE EBOOK DIREKT-DOWNLOAD ============
 async function downloadFreeEbook(slug) {
     const fileMap = {
-        'der-eine-schalter': 'free-ebook-1-der-eine-schalter.pdf',
-        'tiefencode': 'free-ebook-2-tiefencode.pdf',
-        'hardware-update': 'free-ebook-3-hardware-update.pdf'
+        'die-stille-in-dir': 'die-stille-in-dir.pdf',
+        'tiefencode': 'der-tiefencode.pdf',
+        'hardware-update': 'hardware-update.pdf'
     };
     
     const fileName = fileMap[slug];
@@ -253,41 +191,7 @@ async function downloadFreeEbook(slug) {
     }
 }
 
-// ============ FREE EBOOK PER E-MAIL ============
-async function handleFreeEbookDownload(event, slug) {
-    event.preventDefault();
-    const form = event.target;
-    const email = form.querySelector('input[type="email"]').value;
-    
-    if (!email) {
-        showNotification('Bitte E-Mail eingeben', 'error');
-        return;
-    }
-    
-    showNotification('Sende Download-Link...', 'info');
-    
-    try {
-        const res = await fetch(`${API_URL}/download-free-ebook`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, ebookSlug: slug })
-        });
-        
-        const data = await res.json();
-        
-        if (res.ok) {
-            showNotification(`Download-Link für "${slug}" wurde an ${email} gesendet!`, 'success');
-            form.querySelector('input[type="email"]').value = '';
-        } else {
-            showNotification(data.error || 'Fehler beim Versenden', 'error');
-        }
-    } catch (error) {
-        console.error('Free download error:', error);
-        showNotification('Fehler beim Anfordern des Downloads', 'error');
-    }
-}
-
-// ============ MODERN LIBRARY ============
+// ============ GEKAUFTE EBOOKS (LIBRARY) ============
 async function loadLibrary() {
     const container = document.getElementById('libraryContainer');
     if (!container) return;
@@ -333,35 +237,6 @@ async function loadLibrary() {
         const data = await res.json();
         
         let html = '';
-        
-        // Free eBooks Section
-        if (data.grouped?.free?.length > 0) {
-            html += `
-                <div class="library-section">
-                    <div class="library-section-header">
-                        <h3><i class="fas fa-gift"></i> Kostenlose eBooks</h3>
-                        <p>Deine Geschenke - immer verfügbar</p>
-                    </div>
-                    <div class="ebooks-table">
-                        ${data.grouped.free.map(ebook => `
-                            <div class="ebook-row">
-                                <div class="ebook-info">
-                                    <div class="ebook-title"><i class="fas fa-book"></i> ${ebook.title}</div>
-                                    <div class="ebook-meta">
-                                        <span class="ebook-phase"><i class="fas fa-star"></i> Gratis</span>
-                                    </div>
-                                </div>
-                                <div class="ebook-action">
-                                    <button class="download-btn" onclick="downloadEBook('${ebook.slug}')">
-                                        <i class="fas fa-download"></i> Download
-                                    </button>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
         
         // Paid eBooks Section
         const paidEbooks = [
@@ -568,6 +443,7 @@ function showNotification(message, type = 'success') {
 
 // ============ INIT ============
 document.addEventListener('DOMContentLoaded', () => {
+    // Navigation
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -576,21 +452,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
+    // Auth Button
     document.getElementById('authBtn')?.addEventListener('click', () => {
         currentUser ? logout() : openAuthModal();
     });
     
+    // Modal close
     document.querySelector('.close')?.addEventListener('click', closeAuthModal);
     window.onclick = (e) => {
         if (e.target === document.getElementById('authModal')) closeAuthModal();
     };
     
+    // Check Auth
     checkAuth();
     loadCheckoutLinks();
-    loadBonusTools();
 });
 
-// Globale Funktionen
+// ============ GLOBALE FUNKTIONEN (für HTML onclick) ============
 window.showPage = showPage;
 window.navigateToShop = navigateToShop;
 window.scrollToFreeEbook = scrollToFreeEbook;
@@ -603,4 +481,3 @@ window.downloadEBook = downloadEBook;
 window.openAuthModal = openAuthModal;
 window.loadLibrary = loadLibrary;
 window.downloadFreeEbook = downloadFreeEbook;
-window.handleFreeEbookDownload = handleFreeEbookDownload;

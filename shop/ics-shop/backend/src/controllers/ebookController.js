@@ -2,17 +2,6 @@ const Ebook = require('../models/Ebook');
 const fs = require('fs');
 
 class EbookController {
-    // Öffentliche Methode für alle Produkte (ohne Auth)
-    static async getAllProducts(req, res) {
-        try {
-            const result = await Ebook.getAllProducts();
-            res.json(result);
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: 'Failed to fetch products' });
-        }
-    }
-    
     static async getMyEbooks(req, res) {
         try {
             const userId = req.user.id;

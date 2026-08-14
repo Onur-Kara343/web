@@ -46,7 +46,6 @@ class AuthController {
                 return res.status(401).json({ error: 'Invalid credentials' });
             }
             
-            // If user has password, verify it
             if (user.password_hash) {
                 const bcrypt = require('bcrypt');
                 const validPassword = await bcrypt.compare(password, user.password_hash);
@@ -83,7 +82,6 @@ class AuthController {
             }
             
             await User.updateTier(userId, tier);
-            
             res.json({ success: true, tier });
         } catch (error) {
             console.error(error);
