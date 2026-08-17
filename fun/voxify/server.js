@@ -2,43 +2,14 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const { exec } = require('child_process');
-const { TextToSpeechClient } = require('@google-cloud/text-to-speech');
+const googleTTS = require('google-tts-api');
+const fetch = require('node-fetch');
 const app = express();
 const port = 3000;
 
-let ttsClient = null;
-
-function initTTSClient() {
-    try {
-        // Option 1: Umgebungsvariable
-        if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-            ttsClient = new TextToSpeechClient();
-            console.log('✅ Google TTS: Credentials aus GOOGLE_APPLICATION_CREDENTIALS');
-            return true;
-        }
-
-        // Option 2: Lokale JSON-Datei
-        const credPath = path.join(__dirname, 'google-credentials.json');
-        if (fs.existsSync(credPath)) {
-            process.env.GOOGLE_APPLICATION_CREDENTIALS = credPath;
-            ttsClient = new TextToSpeechClient();
-            console.log(`✅ Google TTS: Credentials aus ${credPath}`);
-            return true;
-        }
-
-        console.log('❌ Google TTS: Keine Credentials gefunden!');
-        console.log('   📦 Lösungen:');
-        console.log('   1. GOOGLE_APPLICATION_CREDENTIALS Umgebungsvariable setzen');
-        console.log('   2. google-credentials.json in Projektordner legen');
-        return false;
-    } catch (error) {
-        console.error('❌ Google TTS Fehler:', error.message);
-        return false;
-    }
-}
-
-// TTS initialisieren
-const ttsAvailable = initTTSClient();
+// Wir verwenden eine kostenlose, schlüssel-lose Google Translate TTS-API (inoffiziell)
+// via `google-tts-api`. Keine API-Keys notwendig.
+const ttsAvailable = true;
 
 // ============================================================
 // EXPRESS SETUP
@@ -67,69 +38,41 @@ app.get('/api/status', (req, res) => {
 // ============================================================
 
 app.post('/api/generate-podcast', async (req, res) => {
-    if (!ttsAvailable) {
-        return res.status(500).json({
-            error: 'Google TTS nicht konfiguriert. Bitte google-credentials.json im Projektordner ablegen.'
-        });
-    }
-
     try {
-        const { dialogs, hostVoice, guestVoice, speed, pauseDuration, mood } = req.body;
+        const { text, language, speed, pauseDuration } = req.body;
 
-        if (!dialogs || !Array.isArray(dialogs) || dialogs.length === 0) {
-            return res.status(400).json({ error: 'Keine Dialoge gefunden' });
+        if (!text || typeof text !== 'string' || text.trim().length === 0) {
+            return res.status(400).json({ error: 'Kein Text zum Konvertieren gefunden' });
         }
 
-        console.log(`🎙️ Generiere Podcast mit ${dialogs.length} Dialogen...`);
+        console.log(`🎙️ Generiere Audiobook/Podcast (Ein Sprecher)...`);
 
-        // Google TTS Client
-        const client = new TextToSpeechClient();
-
-        // Audio-Parts sammeln (Base64)
         const audioParts = [];
 
-        for (let i = 0; i < dialogs.length; i++) {
-            const dialog = dialogs[i];
-            const voice = dialog.speaker === 'host' ? hostVoice : guestVoice;
-            const text = dialog.text;
+        const langShort = (language || 'en-US').split('-')[0];
+        const chunks = splitTextIntoChunks(text, 200);
 
-            console.log(`   🔊 Dialog ${i+1}: ${dialog.speaker} (${voice}) - ${text.substring(0, 50)}...`);
+        for (let i = 0; i < chunks.length; i++) {
+            const chunk = chunks[i];
+            console.log(`   🔊 Chunk ${i+1}/${chunks.length} (${langShort}) - ${chunk.substring(0, 50)}...`);
 
-            // Google TTS Request
-            const request = {
-                input: { text: text },
-                voice: {
-                    languageCode: voice.split('-').slice(0, 2).join('-'),
-                    name: voice
-                },
-                audioConfig: {
-                    audioEncoding: 'MP3',
-                    speakingRate: speed,
-                    pitch: mood === 'enthusiastic' ? 2.0 : 
-                           mood === 'calm' ? -2.0 :
-                           mood === 'professional' ? 0.5 :
-                           mood === 'friendly' ? 1.5 : 0.0
-                }
-            };
-
-            // TTS aufrufen
-            const [response] = await client.synthesizeSpeech(request);
-            const audioBase64 = response.audioContent.toString('base64');
-            audioParts.push({
-                speaker: dialog.speaker,
-                base64: audioBase64,
-                text: dialog.text
+            const url = googleTTS.getAudioUrl(chunk, {
+                lang: langShort,
+                slow: false,
+                host: 'https://translate.google.com'
             });
 
-            // Pause zwischen Dialogen (außer beim letzten)
-            if (i < dialogs.length - 1 && pauseDuration > 0) {
-                // Stille generieren (als Base64)
+            const resp = await fetch(url);
+            if (!resp.ok) throw new Error('Fehler beim Abrufen der TTS-Audio-URL');
+            const buffer = await resp.arrayBuffer();
+            const base64 = Buffer.from(buffer).toString('base64');
+
+            audioParts.push({ speaker: 'narrator', base64: base64, text: chunk });
+
+            // Optional: kurze Pause zwischen Chunks
+            if (i < chunks.length - 1 && pauseDuration > 0) {
                 const silence = await generateSilence(pauseDuration);
-                audioParts.push({
-                    speaker: 'pause',
-                    base64: silence,
-                    text: `[Pause ${pauseDuration}s]`
-                });
+                audioParts.push({ speaker: 'pause', base64: silence, text: `[Pause ${pauseDuration}s]` });
             }
         }
 
@@ -251,6 +194,38 @@ async function generateSilence(duration) {
             resolve(base64);
         });
     });
+}
+
+// ============================================================
+// HELPER: Text in Chunks teilen
+// ============================================================
+function splitTextIntoChunks(text, maxLen) {
+    if (!text) return [];
+    const chunks = [];
+    let remaining = text.trim();
+
+    while (remaining.length > 0) {
+        if (remaining.length <= maxLen) {
+            chunks.push(remaining);
+            break;
+        }
+
+        // Suche nach letztem Satzende oder Leerzeichen bevor maxLen
+        let idx = -1;
+        const slice = remaining.slice(0, maxLen + 1);
+        const lastSentence = Math.max(slice.lastIndexOf('. '), slice.lastIndexOf('! '), slice.lastIndexOf('? '));
+        if (lastSentence > -1) idx = lastSentence + 1;
+        if (idx === -1) {
+            const lastSpace = slice.lastIndexOf(' ');
+            idx = lastSpace > -1 ? lastSpace : maxLen;
+        }
+
+        const chunk = remaining.slice(0, idx).trim();
+        chunks.push(chunk);
+        remaining = remaining.slice(idx).trim();
+    }
+
+    return chunks;
 }
 
 // ============================================================

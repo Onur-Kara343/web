@@ -17,9 +17,9 @@
             </div>
             <p class="subtitle">Dein Skript → Natürlicher Podcast</p>
             <div class="badge-container">
-                <span class="badge">⚡ Google Cloud TTS</span>
-                <span class="badge">🎤 2 Stimmen</span>
-                <span class="badge">📊 4M Zeichen gratis</span>
+                <span class="badge">⚡ Kostenloses TTS (kein API-Key)</span>
+                <span class="badge">🎤 Mehrere Stimmen</span>
+                <span class="badge">📥 Export als MP3</span>
             </div>
         </header>
 
@@ -34,65 +34,19 @@
                     <input type="file" id="fileInput" accept=".txt,.md" style="display:none">
                 </div>
             </div>
-            <textarea id="scriptInput" placeholder="Schreibe dein Podcast-Skript hier... 
-
-Beispiel:
-Host: Willkommen zu einer neuen Folge!
-Gast: Danke für die Einladung!
-Host: Heute sprechen wir über KI und Podcasts.
-Gast: Ein spannendes Thema, lass uns loslegen!"></textarea>
+                <textarea id="scriptInput" placeholder="Schreibe deinen Text oder Buchabschnitt hier...\n\nBeispiel: Eine kurze Einführung in Kapitel 1, gefolgt von fortlaufendem Text."></textarea>
         </div>
 
-        <!-- STIMMEN AUSWAHL -->
+        <!-- SPRACHE AUSWAHL (vereinfacht) -->
         <div class="voices-section">
-            <h3>🎤 Stimmen auswählen</h3>
+            <h3>🌐 Sprache wählen</h3>
             <div class="voice-selectors">
                 <div class="voice-group">
-                    <label>Host-Stimme</label>
-                    <select id="hostVoice">
-                        <optgroup label="🇺🇸 Englisch (US)">
-                            <option value="en-US-Neural2-D">en-US-Neural2-D (männlich)</option>
-                            <option value="en-US-Neural2-F" selected>en-US-Neural2-F (weiblich)</option>
-                            <option value="en-US-Neural2-J">en-US-Neural2-J (männlich)</option>
-                            <option value="en-US-Neural2-C">en-US-Neural2-C (weiblich)</option>
-                        </optgroup>
-                        <optgroup label="🇬🇧 Englisch (UK)">
-                            <option value="en-GB-Neural2-A">en-GB-Neural2-A (weiblich)</option>
-                            <option value="en-GB-Neural2-B">en-GB-Neural2-B (männlich)</option>
-                        </optgroup>
-                        <optgroup label="🇩🇪 Deutsch">
-                            <option value="de-DE-Neural2-C">de-DE-Neural2-C (weiblich)</option>
-                            <option value="de-DE-Neural2-D">de-DE-Neural2-D (männlich)</option>
-                            <option value="de-DE-Neural2-F">de-DE-Neural2-F (weiblich)</option>
-                        </optgroup>
-                        <optgroup label="🇫🇷 Französisch">
-                            <option value="fr-FR-Neural2-A">fr-FR-Neural2-A (weiblich)</option>
-                            <option value="fr-FR-Neural2-C">fr-FR-Neural2-C (männlich)</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div class="voice-group">
-                    <label>Gast-Stimme</label>
-                    <select id="guestVoice">
-                        <optgroup label="🇺🇸 Englisch (US)">
-                            <option value="en-US-Neural2-D">en-US-Neural2-D (männlich)</option>
-                            <option value="en-US-Neural2-F" selected>en-US-Neural2-F (weiblich)</option>
-                            <option value="en-US-Neural2-J">en-US-Neural2-J (männlich)</option>
-                            <option value="en-US-Neural2-C">en-US-Neural2-C (weiblich)</option>
-                        </optgroup>
-                        <optgroup label="🇬🇧 Englisch (UK)">
-                            <option value="en-GB-Neural2-A">en-GB-Neural2-A (weiblich)</option>
-                            <option value="en-GB-Neural2-B">en-GB-Neural2-B (männlich)</option>
-                        </optgroup>
-                        <optgroup label="🇩🇪 Deutsch">
-                            <option value="de-DE-Neural2-C">de-DE-Neural2-C (weiblich)</option>
-                            <option value="de-DE-Neural2-D">de-DE-Neural2-D (männlich)</option>
-                            <option value="de-DE-Neural2-F">de-DE-Neural2-F (weiblich)</option>
-                        </optgroup>
-                        <optgroup label="🇫🇷 Französisch">
-                            <option value="fr-FR-Neural2-A">fr-FR-Neural2-A (weiblich)</option>
-                            <option value="fr-FR-Neural2-C">fr-FR-Neural2-C (männlich)</option>
-                        </optgroup>
+                    <label>Sprache</label>
+                    <select id="language">
+                        <option value="de-DE" selected>Deutsch (de-DE)</option>
+                        <option value="en-US">English (en-US)</option>
+                        <option value="fr-FR">Français (fr-FR)</option>
                     </select>
                 </div>
             </div>
@@ -155,7 +109,7 @@ Gast: Ein spannendes Thema, lass uns loslegen!"></textarea>
 
         <!-- FOOTER -->
         <div class="footer">
-            <span>⚡ Google Cloud TTS · 4M Zeichen/Monat gratis</span>
+            <span>⚡ Lokales TTS via Google Translate (inoffiziell)</span>
             <span>🎙️ Voxify v1.0</span>
         </div>
     </div>

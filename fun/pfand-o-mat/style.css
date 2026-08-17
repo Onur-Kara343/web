@@ -1,0 +1,326 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #e8f0fe 0%, #d4e0f5 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin: 0;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+header h1 {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #1a2a4a;
+    letter-spacing: -0.5px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(6px);
+    display: inline-block;
+    padding: 6px 32px 12px 32px;
+    border-radius: 80px;
+    box-shadow: 0 4px 12px rgba(0, 20, 40, 0.08);
+}
+
+.subhead {
+    color: #2c3f66;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-top: 6px;
+    opacity: 0.85;
+}
+
+main {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 40px;
+    padding: 28px 30px;
+    box-shadow: 0 12px 30px rgba(0, 20, 40, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transition: transform 0.15s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.counter-header,
+.goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.counter-header h2,
+.goal-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a2a4a;
+}
+
+.badge {
+    background: #1f3a6b;
+    color: white;
+    padding: 6px 18px;
+    border-radius: 60px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+}
+
+.goal-badge {
+    background: #3a7bd5;
+}
+
+.count-label {
+    font-size: 0.95rem;
+    color: #3f5579;
+    margin-bottom: 2px;
+}
+
+.count-big {
+    font-size: 5rem;
+    font-weight: 700;
+    color: #0b1d3a;
+    text-align: center;
+    line-height: 1.2;
+    background: rgba(240, 246, 255, 0.7);
+    border-radius: 60px;
+    padding: 8px 0;
+    margin: 6px 0 18px 0;
+    letter-spacing: 2px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn {
+    border: none;
+    background: white;
+    padding: 12px 24px;
+    border-radius: 60px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    border: 1px solid #d0dcee;
+    transition: all 0.12s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex: 1 1 auto;
+    min-width: 90px;
+    color: #1f2a44;
+}
+
+.btn-primary {
+    background: #1f3a6b;
+    border-color: #1f3a6b;
+    color: white;
+    box-shadow: 0 6px 14px rgba(31, 58, 107, 0.25);
+}
+
+.btn-primary:hover {
+    background: #2a4a82;
+    transform: scale(1.02);
+}
+
+.btn-secondary {
+    background: #eef3fc;
+    border-color: #c8d6e8;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #dce6f5;
+}
+
+.btn-secondary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-danger {
+    background: #fef0f0;
+    border-color: #f5c2c2;
+    color: #b13e3e;
+}
+
+.btn-danger:hover {
+    background: #fde0e0;
+    border-color: #e79a9a;
+}
+
+.btn-goal {
+    background: #2a6b3c;
+    border-color: #2a6b3c;
+    color: white;
+    box-shadow: 0 6px 14px rgba(42, 107, 60, 0.25);
+}
+
+.btn-goal:hover {
+    background: #357d4a;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid #b8c8e0;
+    color: #3f5579;
+    flex: 0 1 auto;
+    padding: 10px 22px;
+}
+
+.btn-outline:hover {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: #8fa3c0;
+}
+
+.small {
+    font-size: 0.85rem;
+    padding: 10px 16px;
+    flex: 0 1 auto;
+}
+
+.goal-display {
+    background: #f2f7ff;
+    border-radius: 40px;
+    padding: 14px 20px;
+    margin: 10px 0 16px 0;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #1f3a6b;
+    border: 1px dashed #b2c9e6;
+}
+
+.goal-input-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.goal-input-group input {
+    flex: 2 1 120px;
+    padding: 14px 18px;
+    border-radius: 60px;
+    border: 1px solid #cdddec;
+    background: white;
+    font-size: 1rem;
+    font-weight: 500;
+    outline: none;
+    transition: 0.1s;
+}
+
+.goal-input-group input:focus {
+    border-color: #1f3a6b;
+    box-shadow: 0 0 0 3px rgba(31, 58, 107, 0.15);
+}
+
+.progress-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+progress {
+    flex: 1;
+    height: 12px;
+    border-radius: 40px;
+    border: none;
+    background: #e4ebf5;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+progress::-webkit-progress-bar {
+    background: #e4ebf5;
+    border-radius: 40px;
+}
+
+progress::-webkit-progress-value {
+    background: linear-gradient(90deg, #3a7bd5, #2a6b3c);
+    border-radius: 40px;
+    transition: width 0.2s;
+}
+
+progress::-moz-progress-bar {
+    background: linear-gradient(90deg, #3a7bd5, #2a6b3c);
+    border-radius: 40px;
+}
+
+#progressPercent {
+    font-weight: 600;
+    color: #1f3a6b;
+    min-width: 50px;
+    text-align: right;
+}
+
+.action-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 28px;
+    color: #3f5a7e;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+footer p {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+    padding: 8px 22px;
+    border-radius: 60px;
+    display: inline-block;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+        padding: 4px 16px 8px 16px;
+    }
+    .card {
+        padding: 20px 16px;
+    }
+    .count-big {
+        font-size: 3.6rem;
+    }
+    .btn {
+        font-size: 0.9rem;
+        padding: 10px 14px;
+        min-width: 70px;
+    }
+    .goal-input-group input {
+        padding: 12px 14px;
+    }
+}

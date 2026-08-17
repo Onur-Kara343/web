@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Pfand-O-Mat Icon">
+  <rect width="64" height="64" rx="10" fill="#2E7D32"/>
+  <g transform="translate(12,8) scale(0.8)">
+    <path d="M20 2c-1 0-2 .5-2 1.5V8h4V3.5C22 2.5 21 2 20 2zM14 8v20c0 5 2 10 6 10s6-5 6-10V8H14zM16 42v6h8v-6h-8z" fill="#fff"/>
+  </g>
+</svg>

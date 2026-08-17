@@ -106,45 +106,7 @@ async function generatePodcast() {
         return;
     }
 
-    // Dialoge parsen
-    const lines = script.split('\n');
-    const dialogs = [];
-    let currentSpeaker = '';
-    let currentText = '';
-
-    for (const line of lines) {
-        const trimmed = line.trim();
-        if (!trimmed) continue;
-
-        const hostMatch = trimmed.match(/^(Host|Host:|HOST:)\s*(.*)/i);
-        const guestMatch = trimmed.match(/^(Gast|Gast:|GAST:)\s*(.*)/i);
-
-        if (hostMatch) {
-            if (currentSpeaker && currentText) {
-                dialogs.push({ speaker: currentSpeaker, text: currentText.trim() });
-            }
-            currentSpeaker = 'host';
-            currentText = hostMatch[2] || hostMatch[1];
-        } else if (guestMatch) {
-            if (currentSpeaker && currentText) {
-                dialogs.push({ speaker: currentSpeaker, text: currentText.trim() });
-            }
-            currentSpeaker = 'guest';
-            currentText = guestMatch[2] || guestMatch[1];
-        } else {
-            currentText += ' ' + trimmed;
-        }
-    }
-
-    if (currentSpeaker && currentText) {
-        dialogs.push({ speaker: currentSpeaker, text: currentText.trim() });
-    }
-
-    if (dialogs.length === 0) {
-        document.getElementById('status').className = 'status error';
-        document.getElementById('status').textContent = '❌ Keine Dialoge gefunden! Verwende "Host:" und "Gast:" im Skript.';
-        return;
-    }
+    // Wir senden den kompletten Text als ein Narrator-Job (ein Hörbuch)
 
     // Status updaten
     isProcessing = true;
@@ -155,22 +117,18 @@ async function generatePodcast() {
     document.getElementById('status').textContent = `⏳ Generiere ${dialogs.length} Dialoge...`;
 
     try {
-        const hostVoice = document.getElementById('hostVoice').value;
-        const guestVoice = document.getElementById('guestVoice').value;
+        const language = document.getElementById('language').value;
         const speed = parseFloat(document.getElementById('speed').value);
         const pauseDuration = parseFloat(document.getElementById('pause').value);
-        const mood = document.getElementById('mood').value;
 
         const response = await fetch('/api/generate-podcast', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                dialogs: dialogs,
-                hostVoice: hostVoice,
-                guestVoice: guestVoice,
+                text: script,
+                language: language,
                 speed: speed,
-                pauseDuration: pauseDuration,
-                mood: mood
+                pauseDuration: pauseDuration
             })
         });
 
@@ -192,10 +150,8 @@ async function generatePodcast() {
         audioPlayer.src = url;
         audioPlayer.load();
 
-        // Transkript speichern
-        podcastScript = dialogs.map(d => 
-            `${d.speaker === 'host' ? '🎙️ Host' : '🎤 Gast'}: ${d.text}`
-        ).join('\n\n');
+        // Transkript speichern (ganzer Text)
+        podcastScript = script;
 
         document.getElementById('status').className = 'status success';
         document.getElementById('status').textContent = `✅ Podcast erfolgreich generiert! (${dialogs.length} Dialoge, ${Math.round(audioBlob.size / 1024)} KB)`;

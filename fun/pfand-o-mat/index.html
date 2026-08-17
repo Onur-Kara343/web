@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pfand-O-Mat · Zähler & Ziele</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#2E7D32">
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header>
+        <h1>♻️ Pfand-O-Mat</h1>
+        <p class="subhead">Dein persönlicher Flaschen-Zählomat mit Zielen</p>
+    </header>
+
+    <main>
+        <!-- Zähler-Bereich -->
+        <section id="counter" class="card">
+            <div class="counter-header">
+                <h2>📦 Pfandzähler</h2>
+                <span class="badge" id="totalValue">0,00 €</span>
+            </div>
+            <p class="count-label">Anzahl Flaschen</p>
+            <p class="count-big" id="count">0</p>
+            <div class="button-group">
+                <button id="increment" class="btn btn-primary">➕ +1</button>
+                <button id="decrement" class="btn btn-secondary" disabled>➖ −1</button>
+                <button id="reset" class="btn btn-danger">🔄 Zurücksetzen</button>
+            </div>
+        </section>
+
+        <!-- Ziel-Bereich -->
+        <section id="goal" class="card">
+            <div class="goal-header">
+                <h2>🎯 Sparziel</h2>
+                <span id="goalStatus" class="badge goal-badge">⏳</span>
+            </div>
+            <div class="goal-display">
+                <span id="goalDisplay">Kein Ziel gesetzt</span>
+            </div>
+            <div class="goal-input-group">
+                <input type="number" id="goalInput" placeholder="Anzahl Flaschen" min="1" step="1" />
+                <button id="setGoal" class="btn btn-goal">Ziel setzen</button>
+                <button id="clearGoal" class="btn btn-danger small">❌ entfernen</button>
+            </div>
+            <div class="progress-wrapper">
+                <progress id="goalProgress" value="0" max="100"></progress>
+                <span id="progressPercent">0 %</span>
+            </div>
+        </section>
+
+        <!-- Info / Reset -->
+        <div class="action-row">
+            <button id="hardReset" class="btn btn-outline">🗑️ Alle Daten löschen</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>💾 Automatisch gespeichert · <span id="lastSaved">heute</span></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
