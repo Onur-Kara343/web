@@ -27,7 +27,7 @@ class AuthController {
                 user: { id: user.id, email: user.email, tier: user.tier }
             });
         } catch (error) {
-            console.error(error);
+            console.error('Register error:', error);
             res.status(500).json({ error: 'Registration failed' });
         }
     }
@@ -67,25 +67,8 @@ class AuthController {
                 user: { id: user.id, email: user.email, tier: user.tier }
             });
         } catch (error) {
-            console.error(error);
+            console.error('Login error:', error);
             res.status(500).json({ error: 'Login failed' });
-        }
-    }
-    
-    static async updateTier(req, res) {
-        try {
-            const { tier } = req.body;
-            const userId = req.user.id;
-            
-            if (!['basic', 'advanced', 'full'].includes(tier)) {
-                return res.status(400).json({ error: 'Invalid tier' });
-            }
-            
-            await User.updateTier(userId, tier);
-            res.json({ success: true, tier });
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: 'Failed to update tier' });
         }
     }
 }

@@ -6,7 +6,10 @@ require('dotenv').config();
 
 // Routes importieren
 const authRoutes = require('./src/routes/authRoutes');
-const ebookRoutes = require('./src/routes/ebookRoutes');
+const shopEbookRoutes = require('./src/routes/shopEbookRoutes');
+const phaseRoutes = require('./src/routes/phaseRoutes');
+const moduleRoutes = require('./src/routes/moduleRoutes');
+const libraryRoutes = require('./src/routes/libraryRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,7 +28,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ============ ROUTES ============
 app.use('/api', authRoutes);
-app.use('/api', ebookRoutes);
+app.use('/api', shopEbookRoutes);
+app.use('/api', phaseRoutes);
+app.use('/api', moduleRoutes);
+app.use('/api', libraryRoutes);
 
 // ============ CHECKOUT LINKS ============
 app.get('/api/checkout-links', (req, res) => {
@@ -87,8 +93,8 @@ app.get('*', (req, res) => {
 // ============ CREATE UPLOAD DIRECTORIES ============
 const dirs = [
     path.join(__dirname, 'uploads'),
-    path.join(__dirname, 'uploads/free-ebooks'),
-    path.join(__dirname, 'uploads/paid-ebooks')
+    path.join(__dirname, 'uploads/shop_eb'),
+    path.join(__dirname, 'uploads/transformation_eb')
 ];
 
 dirs.forEach(dir => {
@@ -105,8 +111,8 @@ app.listen(PORT, () => {
     🚀 Server gestartet: http://localhost:${PORT}
     ═══════════════════════════════════════════════════
     📁 Frontend: ${frontendPath}
-    📁 Free eBooks: ${path.join(__dirname, 'uploads/free-ebooks')}
-    📁 Paid eBooks: ${path.join(__dirname, 'uploads/paid-ebooks')}
+    📁 Shop eBooks: ${path.join(__dirname, 'uploads/shop_eb')}
+    📁 Transformation eBooks: ${path.join(__dirname, 'uploads/transformation_eb')}
     ═══════════════════════════════════════════════════
     `);
 });
