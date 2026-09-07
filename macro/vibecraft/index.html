@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎵 Music Maker</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🎵 Music Maker</h1>
+            <div class="controls">
+                <button id="playBtn">▶ Play</button>
+                <button id="stopBtn">⏹ Stop</button>
+                <button id="clearBtn">🗑 Clear</button>
+            </div>
+            <div class="tempo-control">
+                <label>Tempo: <span id="tempoDisplay">120</span> BPM</label>
+                <input type="range" id="tempoSlider" min="60" max="180" value="120" />
+            </div>
+        </header>
+
+        <!-- Sequencer Grid -->
+        <div class="sequencer">
+            <!-- Drums -->
+            <div class="track">
+                <span class="track-label">Kick</span>
+                <div class="steps" id="kickSteps"></div>
+            </div>
+            <div class="track">
+                <span class="track-label">Snare</span>
+                <div class="steps" id="snareSteps"></div>
+            </div>
+            <div class="track">
+                <span class="track-label">HiHat</span>
+                <div class="steps" id="hihatSteps"></div>
+            </div>
+            <div class="track">
+                <span class="track-label">Clap</span>
+                <div class="steps" id="clapSteps"></div>
+            </div>
+            
+            <!-- Instrumente -->
+            <div class="track instrument-track">
+                <span class="track-label">🎹 Piano</span>
+                <div class="steps" id="pianoSteps"></div>
+                <button class="instrument-btn" id="pianoBtn">➕ Akkord</button>
+            </div>
+            <div class="track instrument-track">
+                <span class="track-label">🎸 Guitar</span>
+                <div class="steps" id="guitarSteps"></div>
+                <button class="instrument-btn" id="guitarBtn">➕ Akkord</button>
+            </div>
+            <div class="track instrument-track">
+                <span class="track-label">🎸 Bass</span>
+                <div class="steps" id="bassSteps"></div>
+                <button class="instrument-btn" id="bassBtn">➕ Akkord</button>
+            </div>
+            <div class="track instrument-track">
+                <span class="track-label">🎻 Strings</span>
+                <div class="steps" id="stringsSteps"></div>
+                <button class="instrument-btn" id="stringsBtn">➕ Akkord</button>
+            </div>
+        </div>
+
+        <!-- Vocal Section -->
+        <div class="vocal-section">
+            <h3>🎤 Gesang</h3>
+            <div class="vocal-controls">
+                <button id="recordBtn">🎤 Mikrofon initialisieren...</button>
+                <button id="playVocalsBtn">▶️ Gesang abspielen</button>
+                <button id="clearVocalsBtn">🗑 Gesang löschen</button>
+            </div>
+            <div class="vocal-status" id="vocalStatus">⏺ Bereit</div>
+        </div>
+
+        <!-- Save/Load Area -->
+        <div class="storage-area">
+            <div class="save-area">
+                <input type="text" id="beatNameInput" placeholder="Song Name..." />
+                <button id="saveBtn">💾 Save Song</button>
+            </div>
+            <div class="load-area">
+                <h3>Gespeicherte Songs</h3>
+                <ul id="beatList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tone.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <!-- Main App -->
+    <script src="main.js"></script>
+</body>
+</html>
