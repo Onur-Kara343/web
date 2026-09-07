@@ -1,56 +1,57 @@
-# QRY - QR Code Generator
+# QRY - QR-Code-Generator
 
-> Professionelle QR-Codes in Sekunden. Kostenlos, schnell und mit Premium-Features.
+QRY ist als QR-Code-Anwendung mit kostenlosem Tageslimit und geplanten Premium-Funktionen angelegt.
 
-## 🚀 Features
+## Vorgesehene Funktionen
 
-### Free
-- ✅ QR-Code Generierung
-- ✅ 5 QR-Codes pro Tag
-- ✅ Einfache Bedienung
-- ✅ Verlauf
+- QR-Codes erzeugen und herunterladen
+- Kostenlos bis zu fuenf QR-Codes pro Tag
+- Verlauf der erzeugten Codes
+- Premium: Farben, Logo, HD-Aufloesung und Bulk-Modus
+- Registrierung, Login und Premium-Pruefung
+- Vorgesehene Lemon-Squeezy-Zahlungsintegration
 
-### Premium (€9,99 einmalig)
-- ✅ Unbegrenzte QR-Codes
-- ✅ Individuelle Farben
-- ✅ Logo einbetten
-- ✅ Bulk Generator
-- ✅ HD-Qualität
-- ✅ Premium Support
+## Geplante Architektur
 
-## 🛠️ Tech Stack
+- Frontend: Vanilla JavaScript, HTML5 und CSS3
+- Backend: Node.js und Express
+- Datenbank: PostgreSQL
+- Authentifizierung: JWT
+- Zahlung: Lemon Squeezy
+- Ausfuehrung: Docker
 
-- **Frontend**: Vanilla JS, HTML5, CSS3
-- **Backend**: Node.js, Express
-- **Datenbank**: PostgreSQL
-- **Auth**: JWT
-- **Payment**: Lemon Squeezy
-- **Container**: Docker
+## Aktueller Projektstand
 
-## 📦 Installation
+Das Projekt ist derzeit nicht vollstaendig startbereit. Im `backend`-Ordner fehlen unter anderem `package.json`, `server.js` sowie mehrere von den Routen importierte Controller und Middleware-Dateien. Die Docker-Datei erwartet diese Dateien jedoch.
 
-### Mit Docker (empfohlen)
+Auch `backend/.env.example` ist im aktuellen Stand nicht vorhanden. Die folgenden Variablen sind im Compose-Setup vorgesehen:
 
-```bash
-# Repository klonen
-git clone https://github.com/deinusername/qry.git
-cd qry
-
-# .env Datei anpassen
-cp backend/.env.example backend/.env
-# Öffne backend/.env und füge deine Lemon Squeezy Keys ein
-
-# Docker starten
-docker-compose up -d
-
-# App läuft unter:
-# Frontend: http://localhost:3000
-# Backend: http://localhost:5000
+```env
+PORT=5000
+DB_HOST=postgres
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_NAME=qry_db
+JWT_SECRET=EIN_LANGER_ZUFAELLIGER_SCHLUESSEL
+LEMON_SQUEEZY_API_KEY=DEIN_API_KEY
+LEMON_SQUEEZY_STORE_ID=DEINE_STORE_ID
+LEMON_SQUEEZY_PRODUCT_ID=DEINE_PRODUCT_ID
+FRONTEND_URL=http://localhost:3000
 ```
 
-### Deployment-Ready Hinweise
+## Startversuch mit Docker
 
-- Der Backend-Server stellt das Frontend jetzt auch direkt für Production-Deployments bereit.
-- Für Plattformen wie Render, Railway oder Fly.io kann die Umgebungsvariable `DATABASE_URL` verwendet werden.
-- Eine Beispiel-Konfiguration ist in [backend/.env.example](backend/.env.example) hinterlegt.
-- Für Render ist außerdem die Datei [render.yaml](render.yaml) vorbereitet.
+Sobald Backend und Konfiguration vervollstaendigt sind:
+
+```bash
+docker compose up --build
+```
+
+Vorgesehene URLs:
+
+- Frontend: <http://localhost:3000>
+- Backend: <http://localhost:5000>
+- PostgreSQL: Port `5432`
+
+Der aktuelle Ordner kann mit dieser Konfiguration voraussichtlich noch nicht erfolgreich gebaut werden.
