@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Logo Playground Icon">
-  <rect width="64" height="64" rx="12" fill="#0ea5a4"/>
-  <g transform="translate(8,8) scale(0.75)">
-    <circle cx="28" cy="12" r="8" fill="#fff" opacity="0.85"/>
-    <rect x="10" y="28" width="36" height="10" rx="3" fill="#fff" opacity="0.9"/>
-    <path d="M8 44c0 0 10-6 24-6s24 6 24 6" stroke="#083344" stroke-width="3" fill="none" stroke-linecap="round"/>
-  </g>
-</svg>
