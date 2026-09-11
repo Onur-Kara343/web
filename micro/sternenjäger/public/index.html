@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <title>Sternenjäger</title>
+    <meta name="description" content="Fange alle 5 Sterne in 5 Sekunden!" />
+    
+    <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230a0f1e'/%3E%3Ctext x='600' y='280' font-family='Arial' font-size='80' font-weight='bold' fill='%23facc15' text-anchor='middle'%3E⭐ Sternenjäger ⭐%3C/text%3E%3Ctext x='600' y='380' font-family='Arial' font-size='32' fill='%23ffffff' text-anchor='middle'%3EFange 5 Sterne in 5 Sekunden!%3C/text%3E%3C/svg%3E" />
+    <meta property="og:title" content="Sternenjäger" />
+    <meta property="og:description" content="Fange alle 5 Sterne in 5 Sekunden!" />
+    <meta property="og:type" content="website" />
+    
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="style.css?v=5" />
+</head>
+<body>
+
+    <!-- SPIEL CONTAINER -->
+    <div class="game-container" id="gameContainer">
+        
+        <div class="game-header">
+            <h1>⭐ Sternenjäger ⭐</h1>
+            <p class="game-subtitle">Fange alle 5 Sterne in 5 Sekunden!</p>
+        </div>
+
+        <div class="game-area" id="gameArea">
+            
+            <div class="hud">
+                <div class="hud-item">
+                    <span class="hud-label">Punkte</span>
+                    <span class="hud-value" id="scoreValue">0 / 5</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-label">Zeit</span>
+                    <span class="hud-value" id="timerValue">5.0s</span>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="star-target" id="starTarget">⭐</div>
+            
+            <p class="game-hint" id="gameHint">Klicke auf den Stern!</p>
+        </div>
+
+        <button class="start-btn" id="startBtn">SPIEL STARTEN</button>
+    </div>
+
+    <!-- JUMPSCARE OVERLAY -->
+    <div class="jumpscare-overlay" id="jumpscareOverlay"></div>
+    
+    <!-- SOUND -->
+    <audio id="scarySound" preload="auto" src="assets/scream.mp3"></audio>
+
+    <script src="main.js?v=5"></script>
+</body>
+</html>

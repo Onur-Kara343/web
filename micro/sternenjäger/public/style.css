@@ -1,0 +1,259 @@
+/* ========== RESET ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background: linear-gradient(135deg, #0a0f1e 0%, #1a2639 100%);
+    font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* ========== SPIEL CONTAINER ========== */
+.game-container {
+    max-width: 600px;
+    width: 95%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(250, 204, 21, 0.3);
+    border-radius: 32px;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    z-index: 10;
+}
+
+.game-header h1 {
+    color: #facc15;
+    font-size: 2rem;
+    margin-bottom: 8px;
+    text-shadow: 0 0 30px rgba(250, 204, 21, 0.6);
+}
+
+.game-subtitle {
+    color: #94a3b8;
+    font-size: 1rem;
+    margin-bottom: 24px;
+}
+
+/* ========== SPIELBEREICH ========== */
+.game-area {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* HUD */
+.hud {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 3;
+}
+
+.hud-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.hud-item:last-child {
+    align-items: flex-end;
+}
+
+.hud-label {
+    color: #94a3b8;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hud-value {
+    color: #facc15;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+/* Fortschrittsbalken */
+.progress-bar {
+    position: absolute;
+    top: 74px;
+    left: 16px;
+    right: 16px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 3;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #facc15, #f59e0b);
+    border-radius: 10px;
+    transition: width 0.2s ease;
+    box-shadow: 0 0 10px rgba(250, 204, 21, 0.8);
+}
+
+/* Stern */
+.star-target {
+    font-size: 5rem;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    filter: drop-shadow(0 0 20px rgba(250, 204, 21, 0.8));
+    position: absolute;
+    z-index: 5;
+    line-height: 1;
+}
+
+.star-target:hover {
+    transform: scale(1.1);
+}
+
+.star-target:active {
+    transform: scale(0.85);
+}
+
+.star-target.hidden {
+    display: none;
+}
+
+/* Hinweis */
+.game-hint {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-top: 220px;
+    z-index: 2;
+}
+
+/* ========== START BUTTON ========== */
+.start-btn {
+    background: linear-gradient(135deg, #facc15, #f59e0b);
+    color: #0a0f1e;
+    border: none;
+    padding: 16px 48px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 24px rgba(250, 204, 21, 0.4);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(250, 204, 21, 0.6);
+}
+
+.start-btn:active {
+    transform: translateY(2px);
+}
+
+.start-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ========== JUMPSCARE OVERLAY ========== */
+.jumpscare-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.jumpscare-overlay.active {
+    display: flex;
+}
+
+/* Bild KOMPLETT sichtbar (contain) – schwarzer Hintergrund */
+.jumpscare-overlay img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    background: #000000;
+}
+
+/* ========== FLACKERN – SCHWARZ/WEISS ========== */
+@keyframes flashWhiteBlack {
+    0%   { background: #ffffff; }
+    15%  { background: #000000; }
+    30%  { background: #ffffff; }
+    45%  { background: #000000; }
+    60%  { background: #ffffff; }
+    75%  { background: #000000; }
+    100% { background: #ffffff; }
+}
+
+@keyframes flashBlack {
+    0%   { background: #000000; }
+    20%  { background: #1a1a1a; }
+    40%  { background: #000000; }
+    60%  { background: #1a1a1a; }
+    80%  { background: #000000; }
+    100% { background: #000000; }
+}
+
+.jumpscare-overlay.flash-white {
+    display: flex;
+    animation: flashWhiteBlack 0.4s linear 3;
+}
+
+.jumpscare-overlay.flash-black {
+    display: flex;
+    animation: flashBlack 0.12s linear infinite;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 600px) {
+    .game-container {
+        padding: 24px 16px;
+    }
+
+    .game-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .star-target {
+        font-size: 4rem;
+    }
+
+    .start-btn {
+        padding: 14px 32px;
+        font-size: 1rem;
+    }
+}

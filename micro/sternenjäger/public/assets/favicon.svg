@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <!-- Hintergrund -->
+    <rect width="100" height="100" rx="20" fill="#0a0f1e" />
+    
+    <!-- Stern -->
+    <polygon points="50,15 61,38 86,38 66,55 73,80 50,65 27,80 34,55 14,38 39,38" 
+             fill="#facc15" 
+             stroke="#f59e0b" 
+             stroke-width="2" 
+             stroke-linejoin="round" />
+    
+    <!-- Glanzpunkt -->
+    <circle cx="42" cy="35" r="4" fill="#ffffff" opacity="0.8" />
+    
+    <!-- Kleiner Glanz -->
+    <circle cx="58" cy="45" r="2" fill="#ffffff" opacity="0.5" />
+</svg>
