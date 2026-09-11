@@ -68,7 +68,7 @@
     function loadJumpscareImage() {
         return new Promise(function(resolve) {
             const img = document.createElement('img');
-            img.src = 'assets/jumpscare.jpg?t=' + Date.now();
+            img.src = 'src/assets/jumpscare.jpg?t=' + Date.now();
             img.alt = 'Jumpscare';
 
             img.onload = function() { resolve(img); };
