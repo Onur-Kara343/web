@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRY | QR Code Generator</title>
+    <link rel="icon" type="image/svg+xml" href="src/assets/favicon.svg">
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+    <main class="container">
+        <h1>QRY | QR Code Generator</h1>
+        <p class="subtitle">WLAN, Passwort oder Text – direkt im Browser erzeugt.</p>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="text">Text</button>
+            <button class="tab" data-tab="wlan">WLAN</button>
+            <button class="tab" data-tab="passwort">Passwort</button>
+        </div>
+
+        <!-- Text -->
+        <section class="panel active" id="panel-text">
+            <label for="text-input">Text oder URL</label>
+            <textarea id="text-input" rows="4" placeholder="https://example.com"></textarea>
+        </section>
+
+        <!-- WLAN -->
+        <section class="panel" id="panel-wlan">
+            <label for="wlan-ssid">SSID (Netzwerkname)</label>
+            <input type="text" id="wlan-ssid" placeholder="MeinWLAN">
+
+            <label for="wlan-pass">Passwort</label>
+            <input type="text" id="wlan-pass" placeholder="geheim123">
+
+            <label for="wlan-enc">Verschlüsselung</label>
+            <select id="wlan-enc">
+                <option value="WPA">WPA/WPA2</option>
+                <option value="WEP">WEP</option>
+                <option value="nopass">Kein Passwort</option>
+            </select>
+
+            <label class="checkbox">
+                <input type="checkbox" id="wlan-hidden"> Verstecktes Netzwerk
+            </label>
+        </section>
+
+        <!-- Passwort -->
+        <section class="panel" id="panel-passwort">
+            <label for="pw-input">Passwort</label>
+            <input type="text" id="pw-input" placeholder="MeinPasswort123!">
+        </section>
+
+        <!-- Optionen -->
+        <div class="options">
+            <label for="size">Größe: <span id="size-value">256</span> px</label>
+            <input type="range" id="size" min="128" max="1024" step="32" value="256">
+
+            <label for="ecc">Fehlerkorrektur</label>
+            <select id="ecc">
+                <option value="L">L (7%)</option>
+                <option value="M" selected>M (15%)</option>
+                <option value="Q">Q (25%)</option>
+                <option value="H">H (30%)</option>
+            </select>
+        </div>
+
+        <button id="generate" class="generate-btn">QR-Code erzeugen</button>
+
+        <div class="output">
+            <div id="qrcode"></div>
+            <button id="download" class="download-btn" hidden>Als PNG herunterladen</button>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="src/main.js"></script>
+</body>
+</html>

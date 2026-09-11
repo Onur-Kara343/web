@@ -50,6 +50,6 @@ npm run dev
 
 Der Backend-Port kann ueber `PORT` gesetzt werden und ist standardmaessig `3000`.
 
-## Bekannte Einschraenkung
+## Hinweise
 
-Die aktuelle Frontend- und Nginx-Konfiguration verweist fest auf ein Render-Backend (`blumentagebuch-backend-latest.onrender.com`). Dadurch verwendet der lokale Docker-Start moeglicherweise nicht das gleichzeitig gestartete lokale Backend. Der Trefle-Key ist derzeit ausserdem direkt in `backend/server.js` hinterlegt und sollte in eine Umgebungsvariable verschoben werden.
+Die lokale Nginx-Konfiguration leitet `/api/` im Docker-Setup an den Compose-Service `backend` weiter. Der Trefle-Key ist derzeit noch direkt in `backend/server.js` hinterlegt und sollte vor einem produktiven Einsatz in eine Umgebungsvariable verschoben werden.

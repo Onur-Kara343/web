@@ -1,0 +1,11 @@
+services:
+  songremixer:
+    build: .
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    volumes:
+      - songremixer_temp:/app/temp
+
+volumes:
+  songremixer_temp:

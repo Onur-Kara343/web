@@ -40,3 +40,11 @@ FFmpeg muss als `ffmpeg` aufrufbar sein. Der aktuelle Server verwendet keine Goo
 ## Aktueller Hinweis
 
 Die aktuelle Implementierung verwendet an mehreren Stellen `dialogs.length`, obwohl `dialogs` nicht definiert ist. Die Podcast-Erzeugung kann deshalb nach der TTS-Verarbeitung mit einem Laufzeitfehler abbrechen. Vor einem produktiven Einsatz sollte dieser Fehler in `public/script.js` und `server.js` behoben werden.
+
+## Start mit Docker
+
+```bash
+docker compose up --build
+```
+
+Die Anwendung ist danach unter <http://localhost:3000> erreichbar. FFmpeg wird im Image installiert; die TTS-Aufrufe benoetigen weiterhin Internetzugang. Temporere Dateien liegen in einem Docker-Volume.

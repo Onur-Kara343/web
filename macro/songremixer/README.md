@@ -41,3 +41,11 @@ npm run dev
 ```
 
 Die aktuelle Package-Konfiguration listet `nodemon` nicht als `devDependency`; der Entwicklungsstart ist daher moeglicherweise nicht reproduzierbar.
+
+## Start mit Docker
+
+```bash
+docker compose up --build
+```
+
+Die Anwendung ist danach unter <http://localhost:3000> erreichbar. Das Image installiert FFmpeg und `yt-dlp` automatisch. Temporere Audiodateien werden in einem Docker-Volume gespeichert.

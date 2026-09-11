@@ -82,7 +82,7 @@
     }
 
     // ============================================
-    // 4️⃣ JUMPSCARE – KOMMT SOFORT!
+    // 4️⃣ JUMPSCARE – ALLES GLEICHZEITIG!
     // ============================================
     async function triggerJumpscare() {
         if (soundPlayed) return;
@@ -92,21 +92,18 @@
         stopTimer();
         gameRunning = false;
 
-        // ---------- FLACKERN (weiß/schwarz) ----------
+        // ---------- ALLES SOFORT & GLEICHZEITIG ----------
+        // 1. Overlay aktivieren + Flackern + Bild
+        overlay.classList.add('active');
         overlay.classList.add('flash-white');
-        await new Promise(function(r) { setTimeout(r, 1200); });
-        overlay.classList.remove('flash-white');
 
-        // ---------- SOUND SOFORT ----------
+        // 2. Sound SOFORT abspielen
         playScarySound();
 
-        // ---------- VIBRATION ----------
+        // 3. Vibration SOFORT
         vibratePhone();
 
-        // ---------- BILD ANZEIGEN (SOFORT, schwarz) ----------
-        overlay.classList.add('active');
-        overlay.classList.add('flash-black');
-
+        // 4. Bild SOFORT laden und anzeigen
         try {
             const imageElement = await loadJumpscareImage();
             overlay.appendChild(imageElement);
@@ -117,7 +114,13 @@
             overlay.appendChild(fallback);
         }
 
-        // Spiel ausblenden
+        // 5. Nach dem Flackern → schwarzes Dauerflackern
+        setTimeout(function() {
+            overlay.classList.remove('flash-white');
+            overlay.classList.add('flash-black');
+        }, 1200);
+
+        // 6. Spiel ausblenden
         gameContainer.style.transition = 'opacity 0.3s';
         gameContainer.style.opacity = '0';
         setTimeout(function() {
@@ -201,7 +204,6 @@
             stopTimer();
             gameHint.textContent = '💀 ERWISCHT...';
             starTarget.classList.add('hidden');
-            // SOFORT! Kein setTimeout mehr!
             triggerJumpscare();
             return;
         }
@@ -254,6 +256,6 @@
         if (e.key === 'Escape') e.preventDefault();
     });
 
-    console.log('⭐ Sternenjäger – 5 Sterne in 7 Sekunden!');
+    console.log('⭐ Sternenjäger – 5 Sterne in 5 Sekunden!');
     console.log('💀 Viel Glück...');
 })();

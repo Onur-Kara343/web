@@ -1,15 +1,14 @@
 services:
   backend:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: blumentagebuch-backend
     restart: always
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
     networks:
       - blumentagebuch-network
 

@@ -1,0 +1,11 @@
+services:
+  voxify:
+    build: .
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    volumes:
+      - voxify_temp:/app/temp
+
+volumes:
+  voxify_temp:
