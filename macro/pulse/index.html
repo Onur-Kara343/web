@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse — Verkaufs-Cockpit</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="brand">
+      <div class="logo">⚡</div>
+      <div>
+        <h1>Pulse</h1>
+        <div class="sub">Dein Verkaufs-Cockpit · <span id="yearLabel">2026</span></div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="ghost accent" id="yearCloseBtn">📥 Jahr abschließen</button>
+      <button class="ghost" id="resetBtn">Alle Daten löschen</button>
+    </div>
+  </header>
+
+  <!-- Info-Banner -->
+  <div class="year-banner" id="yearBanner">
+    <span class="year-banner-icon">📅</span>
+    <div class="year-banner-text">
+      <b>Aktuelles Jahr: <span id="bannerYear">2026</span></b>
+      <span>Alle Eingaben gehören zu diesem Jahr. Am Jahresende kannst du alles als Excel exportieren und neu starten.</span>
+    </div>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="overview">📊 Übersicht</button>
+    <button class="tab" data-tab="sales">💰 Verkäufe</button>
+    <button class="tab" data-tab="costs">🧾 Kosten</button>
+  </nav>
+
+  <!-- ============ TAB: ÜBERSICHT ============ -->
+  <section class="tab-panel active" id="panel-overview">
+
+    <div class="grid kpis">
+      <div class="card">
+        <div class="kpi-label">Umsatz</div>
+        <div class="kpi-value" id="kpiRevenue">0 €</div>
+        <div class="kpi-delta up" id="kpiRevenueSub">0 Verkäufe</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">Kosten</div>
+        <div class="kpi-value" id="kpiCost">0 €</div>
+        <div class="kpi-delta" id="kpiCostSub">0 Posten</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">Gewinn</div>
+        <div class="kpi-value" id="kpiProfit">0 €</div>
+        <div class="kpi-delta up" id="kpiMargin">Marge 0 %</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">Produkte</div>
+        <div class="kpi-value" id="kpiProducts">0</div>
+        <div class="kpi-delta" id="kpiProductsSub">0 verkauft gesamt</div>
+      </div>
+    </div>
+
+    <div class="card main-chart-card">
+      <div class="card-title">
+        <span>Umsatz · Kosten · Gewinn pro Produkt</span>
+        <select id="monthFilter" class="month-filter">
+          <option value="all">Gesamt (alle Monate)</option>
+        </select>
+      </div>
+      <div id="chartWrap"></div>
+      <div class="legend legend-rich" id="chartLegend">
+        <span><span class="dot" style="background:var(--accent)"></span>Umsatz <b id="legRevenue">0 €</b></span>
+        <span><span class="dot" style="background:var(--red)"></span>Kosten <b id="legCost">0 €</b></span>
+        <span><span class="dot" style="background:var(--green)"></span>Gewinn <b id="legProfit">0 €</b></span>
+      </div>
+    </div>
+
+    <div class="card month-card">
+      <div class="card-title">
+        <span>Monats-Übersicht</span>
+      </div>
+      <div id="monthTableWrap" class="month-table-wrap"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>Produktübersicht</span>
+        <span style="color:var(--muted);font-weight:400;font-size:0.8rem" id="prodCount">0</span>
+      </div>
+      <div id="productList"></div>
+    </div>
+
+  </section>
+
+  <!-- ============ TAB: VERKÄUFE ============ -->
+  <section class="tab-panel" id="panel-sales">
+
+    <div class="grid main-grid">
+      <div class="card">
+        <div class="card-title">Verkauf erfassen</div>
+        <form id="saleForm">
+          <input type="text" id="sProduct" placeholder="Produktname" required maxlength="40" list="productNames">
+          <datalist id="productNames"></datalist>
+          <div class="row">
+            <input type="number" id="sPrice" placeholder="Stückpreis €" step="0.01" min="0" required>
+            <input type="number" id="sQty" placeholder="Menge" min="1" value="1" required>
+          </div>
+          <div class="row">
+            <select id="sCategory">
+              <option value="Digital">Digital</option>
+              <option value="Kurs">Kurs</option>
+              <option value="E-Book">E-Book</option>
+              <option value="Template">Template</option>
+              <option value="Sonstiges">Sonstiges</option>
+            </select>
+            <select id="sMonth" required></select>
+          </div>
+          <button type="submit">+ Verkauf hinzufügen</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Verkaufs-Statistik</div>
+        <div class="mini-kpis">
+          <div class="mini-kpi">
+            <div class="kpi-label">Umsatz</div>
+            <div class="kpi-value sm" id="salesRevenue">0 €</div>
+          </div>
+          <div class="mini-kpi">
+            <div class="kpi-label">Verkäufe</div>
+            <div class="kpi-value sm" id="salesCount">0</div>
+          </div>
+          <div class="mini-kpi">
+            <div class="kpi-label">Ø Preis</div>
+            <div class="kpi-value sm" id="salesAvg">0 €</div>
+          </div>
+          <div class="mini-kpi">
+            <div class="kpi-label">Top-Produkt</div>
+            <div class="kpi-value sm" id="salesTop">—</div>
+          </div>
+        </div>
+        <div class="mini-chart-title">Umsatz pro Verkauf</div>
+        <div id="salesMiniChart"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>Erfasste Verkäufe</span>
+        <span style="color:var(--muted);font-weight:400;font-size:0.8rem" id="salesListCount">0</span>
+      </div>
+      <div id="salesList"></div>
+    </div>
+
+  </section>
+
+  <!-- ============ TAB: KOSTEN ============ -->
+  <section class="tab-panel" id="panel-costs">
+
+    <div class="grid main-grid">
+      <div class="card">
+        <div class="card-title">Kosten erfassen</div>
+        <form id="costForm">
+          <input type="text" id="cName" placeholder="Bezeichnung (z.B. Software-Abo)" required maxlength="40">
+          <div class="row">
+            <input type="number" id="cAmount" placeholder="Betrag €" step="0.01" min="0" required>
+            <select id="cType">
+              <option value="Fixkosten">Fixkosten</option>
+              <option value="Variable">Variabel</option>
+              <option value="Einmalig">Einmalig</option>
+            </select>
+          </div>
+          <div class="row">
+            <select id="cCategory">
+              <option value="Software">Software</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Hosting">Hosting</option>
+              <option value="Tools">Tools</option>
+              <option value="Sonstiges">Sonstiges</option>
+            </select>
+            <select id="cMonth" required></select>
+          </div>
+          <button type="submit">+ Kosten hinzufügen</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Kosten-Statistik</div>
+        <div class="mini-kpis">
+          <div class="mini-kpi">
+            <div class="kpi-label">Gesamt</div>
+            <div class="kpi-value sm" id="costTotal">0 €</div>
+          </div>
+          <div class="mini-kpi">
+            <div class="kpi-label">Posten</div>
+            <div class="kpi-value sm" id="costCount">0</div>
+          </div>
+          <div class="mini-kpi">
+            <div class="kpi-label">Fixkosten</div>
+            <div class="kpi-value sm" id="costFixed">0 €</div>
+          </div>
+          <div class="mini-kpi">
+            <div class="kpi-label">Ø pro Posten</div>
+            <div class="kpi-value sm" id="costAvg">0 €</div>
+          </div>
+        </div>
+        <div class="mini-chart-title">Kosten nach Kategorie</div>
+        <div id="costMiniChart"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>Erfasste Kosten</span>
+        <span style="color:var(--muted);font-weight:400;font-size:0.8rem" id="costListCount">0</span>
+      </div>
+      <div id="costList"></div>
+    </div>
+
+  </section>
+
+  <footer>
+    Pulse · lokal im Browser gespeichert
+  </footer>
+
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

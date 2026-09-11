@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="pulseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6c8cff"/>
+      <stop offset="100%" stop-color="#33d69f"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Badge -->
+  <rect x="2" y="2" width="60" height="60" rx="16" ry="16" fill="url(#pulseGrad)"/>
+
+  <!-- Blitz -->
+  <path d="M36 10 L18 34 L30 34 L28 54 L46 30 L34 30 Z"
+        fill="#ffffff"
+        stroke="#ffffff"
+        stroke-width="1"
+        stroke-linejoin="round"/>
+</svg>
