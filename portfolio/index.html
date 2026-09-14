@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Onur Kara – Software Entwickler. Ich baue Websites, CLI Tools und Python Bots. Mein Ziel: Edge AI.">
+    <meta name="keywords" content="Software Entwickler, Python, CLI Tools, Bots, Edge AI, Portfolio">
+    <meta name="author" content="Onur Kara">
+    <title>Onur Kara | Software Entwickler</title>
+    <link rel="icon" type="image/svg+xml" href="src/assets/favicon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+    <!-- Dark/Light Mode Toggle -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Dark/Light Modus">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="#home">Onur Kara</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Start</a></li>
+                <li><a href="#vision" class="nav-link">Vision</a></li>
+                <li><a href="#projects" class="nav-link">Projekte</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#contact" class="nav-link">Links</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Hi, ich bin <span class="highlight">Onur Kara</span></h1>
+                    <div class="typing-wrapper">
+                        <span id="typed-text"></span>
+                        <span class="cursor"></span>
+                    </div>
+                    <p>Ich baue Software – Websites, CLI Tools und Python Bots. Aktuell arbeite ich an meinem Ziel: <strong>Edge AI</strong>.</p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary">Kontakt aufnehmen</a>
+                        <a href="src/assets/lebenslauf_onurkara.pdf" class="btn btn-secondary" download>CV <i class="fas fa-download"></i></a>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/okara-dev" target="_blank" rel="noopener" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://gumroad.com/DEIN-USERNAME" target="_blank" rel="noopener" aria-label="Gumroad">
+                            <i class="fas fa-store"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="profile-placeholder">
+                        <i class="fas fa-terminal"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision / Edge AI Section -->
+    <section id="vision" class="vision">
+        <div class="container">
+            <h2 class="section-title">Vision</h2>
+            <p class="section-subtitle">Wohin ich mit meiner Arbeit gehe</p>
+
+            <div class="vision-card">
+                <div class="vision-icon">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <div class="vision-content">
+                    <h3>Edge AI</h3>
+                    <p>
+                        Mein langfristiges Ziel ist es, KI-Modelle direkt auf Geräten laufen zu lassen –
+                        ohne Cloud, ohne Latenz, ohne Datenpreisgabe. Ob Raspberry Pi oder Smartphone:
+                        KI gehört auf das Gerät, nicht in ein Rechenzentrum.
+                    </p>
+                    <div class="vision-tags">
+                        <span class="tag">TinyML</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Onnx</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projekte Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Was ich baue..</h2>
+            <p class="section-subtitle">Ein kleiner Überblick</p>
+
+            <!-- Websites -->
+            <div class="project-group">
+                <h3 class="project-group-title">
+                    <i class="fas fa-globe"></i> Websites
+                </h3>
+                <div class="table-wrapper">
+                    <table class="projects-table">
+                        <thead>
+                            <tr>
+                                <th>Projekt</th>
+                                <th>Tech Stack</th>
+                                <th>Link</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projects-websites"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CLI Tools -->
+            <div class="project-group">
+                <h3 class="project-group-title">
+                    <i class="fas fa-terminal"></i> CLI Tools
+                </h3>
+                <div class="table-wrapper">
+                    <table class="projects-table">
+                        <thead>
+                            <tr>
+                                <th>Projekt</th>
+                                <th>Tech Stack</th>
+                                <th>Link</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projects-cli"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Python Bots -->
+            <div class="project-group">
+                <h3 class="project-group-title">
+                    <i class="fas fa-robot"></i> Python Bots
+                </h3>
+                <div class="table-wrapper">
+                    <table class="projects-table">
+                        <thead>
+                            <tr>
+                                <th>Projekt</th>
+                                <th>Tech Stack</th>
+                                <th>Link</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projects-bots"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Tech Skills</h2>
+            <p class="section-subtitle">Womit ich täglich arbeite</p>
+            <div class="skills-grid" id="skills-grid">
+                <!-- Wird via JS gefüllt -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Links / Kontakt Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Links</h2>
+            <p class="section-subtitle">Hier findest du mich</p>
+            <div class="links-wrapper">
+                <a href="mailto:karaonur310@gmail.com" class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="link-info">
+                        <h4>E-Mail</h4>
+                        <p>karaonur310@gmail.com</p>
+                    </div>
+                    <i class="fas fa-arrow-right link-arrow"></i>
+                </a>
+                <a href="https://github.com/okara-dev" target="_blank" rel="noopener" class="link-card">
+                    <div class="link-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="link-info">
+                        <h4>GitHub</h4>
+                        <p>github.com/okara-dev</p>
+                    </div>
+                    <i class="fas fa-arrow-right link-arrow"></i>
+                </a>
+                <a href="https://gumroad.com/DEIN-USERNAME" target="_blank" rel="noopener" class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="link-info">
+                        <h4>Gumroad</h4>
+                        <p>gumroad.com/DEIN-USERNAME</p>
+                    </div>
+                    <i class="fas fa-arrow-right link-arrow"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Onur Kara. Built with care.</p>
+        </div>
+    </footer>
+
+    <script src="src/main.js"></script>
+</body>
+</html>
