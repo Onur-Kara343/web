@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vault – API Keys sicher verwalten</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1117'/%3E%3Ccircle cx='24' cy='32' r='10' fill='none' stroke='%2300ff9c' stroke-width='4'/%3E%3Ccircle cx='24' cy='32' r='3' fill='%2300ff9c'/%3E%3Crect x='34' y='29' width='20' height='6' rx='2' fill='%2300ff9c'/%3E%3Crect x='46' y='35' width='4' height='8' fill='%2300ff9c'/%3E%3Crect x='52' y='35' width='4' height='6' fill='%2300ff9c'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+
+  <!-- SETUP / LOGIN SCREEN -->
+  <div id="auth-screen" class="auth-screen">
+    <div class="auth-card">
+      <div class="logo">
+        <svg viewBox="0 0 64 64" width="48" height="48">
+          <circle cx="24" cy="32" r="10" fill="none" stroke="#00ff9c" stroke-width="4"/>
+          <circle cx="24" cy="32" r="3" fill="#00ff9c"/>
+          <rect x="34" y="29" width="20" height="6" rx="2" fill="#00ff9c"/>
+          <rect x="46" y="35" width="4" height="8" fill="#00ff9c"/>
+          <rect x="52" y="35" width="4" height="6" fill="#00ff9c"/>
+        </svg>
+        <h1>Vault</h1>
+      </div>
+
+      <!-- Setup -->
+      <div id="setup-form">
+        <p class="hint">Lege dein Master-Passwort fest. <strong>Achtung:</strong> Es kann später nicht geändert werden.</p>
+        <input type="password" id="setup-pass" placeholder="Passwort" autocomplete="new-password" />
+        <input type="password" id="setup-pass-confirm" placeholder="Passwort bestätigen" autocomplete="new-password" />
+        <button id="setup-btn" class="btn primary">Vault erstellen</button>
+        <p class="error" id="setup-error"></p>
+      </div>
+
+      <!-- Login -->
+      <div id="login-form" class="hidden">
+        <p class="hint">Gib dein Master-Passwort ein.</p>
+        <input type="password" id="login-pass" placeholder="Passwort" autocomplete="current-password" />
+        <button id="login-btn" class="btn primary">Entsperren</button>
+        <p class="error" id="login-error"></p>
+        <button id="reset-btn" class="btn ghost small">Account neu erstellen (löscht alles)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app" class="app hidden">
+    <header class="topbar">
+      <div class="brand">
+        <svg viewBox="0 0 64 64" width="28" height="28">
+          <circle cx="24" cy="32" r="10" fill="none" stroke="#00ff9c" stroke-width="4"/>
+          <circle cx="24" cy="32" r="3" fill="#00ff9c"/>
+          <rect x="34" y="29" width="20" height="6" rx="2" fill="#00ff9c"/>
+          <rect x="46" y="35" width="4" height="8" fill="#00ff9c"/>
+          <rect x="52" y="35" width="4" height="6" fill="#00ff9c"/>
+        </svg>
+        <span>Vault</span>
+      </div>
+      <div class="actions">
+        <button id="lock-btn" class="btn ghost small">Sperren</button>
+        <button id="wipe-btn" class="btn danger small">Account neu erstellen</button>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="add-section">
+        <h2>Neuen Key hinzufügen</h2>
+        <form id="add-form" class="add-form">
+          <input type="text" id="key-name" placeholder="Name (z. B. OpenAI)" required />
+          <input type="text" id="key-value" placeholder="API Key" required autocomplete="off" />
+          <button type="submit" class="btn primary">Hinzufügen</button>
+        </form>
+      </section>
+
+      <section class="list-section">
+        <h2>Deine Keys <span id="key-count" class="count">0</span></h2>
+        <ul id="key-list" class="key-list"></ul>
+        <p id="empty-msg" class="empty">Noch keine Keys gespeichert.</p>
+      </section>
+    </main>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast hidden"></div> 
+
+  <script src="src/main.js"></script>
+</body>
+</html>
