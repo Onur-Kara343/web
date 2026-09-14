@@ -1,7 +1,7 @@
 {
-  "name": "voxify",
+  "name": "voxify-backend",
   "version": "1.0.0",
-  "description": "🎙️ KI Podcast Generator - Dein Skript → Natürlicher Podcast",
+  "description": "🎙️ Voxify Backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

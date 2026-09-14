@@ -106,15 +106,13 @@ async function generatePodcast() {
         return;
     }
 
-    // Wir senden den kompletten Text als ein Narrator-Job (ein Hörbuch)
-
     // Status updaten
     isProcessing = true;
     const btn = document.getElementById('generateBtn');
     btn.disabled = true;
-    btn.textContent = '⏳ Podcast wird generiert...';
+    btn.textContent = '⏳ Audio wird generiert...';
     document.getElementById('status').className = 'status loading';
-    document.getElementById('status').textContent = `⏳ Generiere ${dialogs.length} Dialoge...`;
+    document.getElementById('status').textContent = `⏳ Audio wird generiert…`;
 
     try {
         const language = document.getElementById('language').value;
@@ -154,7 +152,7 @@ async function generatePodcast() {
         podcastScript = script;
 
         document.getElementById('status').className = 'status success';
-        document.getElementById('status').textContent = `✅ Podcast erfolgreich generiert! (${dialogs.length} Dialoge, ${Math.round(audioBlob.size / 1024)} KB)`;
+        document.getElementById('status').textContent = `✅ Audio erfolgreich generiert! (${data.parts} Teile, ${Math.round(audioBlob.size / 1024)} KB)`;
 
         btn.textContent = '🎙️ Podcast generieren';
         btn.disabled = false;

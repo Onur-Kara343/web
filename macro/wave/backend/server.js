@@ -2,8 +2,20 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const { exec } = require('child_process');
+
 const app = express();
 const port = 3000;
+
+// ============================================================
+// PFADE
+// ============================================================
+
+const FRONTEND_DIR = path.join(__dirname, '..', 'frontend');
+const TEMP_DIR = path.join(__dirname, 'temp');
+
+if (!fs.existsSync(TEMP_DIR)) {
+    fs.mkdirSync(TEMP_DIR, { recursive: true });
+}
 
 // ============================================================
 // FFMPEG FINDEN
@@ -48,18 +60,14 @@ function checkYtDlp() {
 async function downloadYouTubeAudio(url) {
     return new Promise(async (resolve, reject) => {
         const timestamp = Date.now();
-        const outputPath = path.join(__dirname, 'temp', `youtube_${timestamp}.mp3`);
-        
-        if (!fs.existsSync(path.join(__dirname, 'temp'))) {
-            fs.mkdirSync(path.join(__dirname, 'temp'));
-        }
-        
+        const outputPath = path.join(TEMP_DIR, `youtube_${timestamp}.mp3`);
+
         const ffmpegPath = await findFFmpeg();
         let ffmpegOption = '';
         if (ffmpegPath && ffmpegPath !== 'ffmpeg') {
             ffmpegOption = `--ffmpeg-location "${ffmpegPath}"`;
         }
-        
+
         const cmd = `yt-dlp -x --audio-format mp3 --audio-quality 128K ` +
                     `${ffmpegOption} ` +
                     `--extractor-args "youtube:player_client=android" ` +
@@ -67,9 +75,9 @@ async function downloadYouTubeAudio(url) {
                     `--no-cache-dir ` +
                     `-o "${outputPath}" ` +
                     `"${url}"`;
-        
+
         console.log(`📥 Lade YouTube: ${url}`);
-        
+
         exec(cmd, { timeout: 180000, maxBuffer: 1024 * 1024 * 10 }, (error, stdout, stderr) => {
             if (error) {
                 reject(new Error(stderr || 'Download fehlgeschlagen'));
@@ -98,10 +106,11 @@ async function downloadYouTubeAudio(url) {
 // EXPRESS
 // ============================================================
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(FRONTEND_DIR));
+app.use('/temp', express.static(TEMP_DIR));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public',  'index.html'));
+    res.sendFile(path.join(FRONTEND_DIR, 'index.html'));
 });
 
 app.get('/api/youtube-status', async (req, res) => {
@@ -154,15 +163,6 @@ app.get('/api/youtube-download', async (req, res) => {
     }
 });
 
-app.get('/temp/:filename', (req, res) => {
-    const filePath = path.join(__dirname, 'temp', req.params.filename);
-    if (fs.existsSync(filePath)) {
-        res.sendFile(filePath);
-    } else {
-        res.status(404).send('Datei nicht gefunden');
-    }
-});
-
 // ============================================================
 // START
 // ============================================================
@@ -175,16 +175,16 @@ app.listen(port, async () => {
     console.log('║                                                            ║');
     console.log(`║   🌐 http://localhost:${port}                               ║`);
     console.log('║                                                            ║');
-    
+
     const hasYtDlp = await checkYtDlp();
     const ffmpeg = await findFFmpeg();
-    
+
     if (hasYtDlp) console.log('║   ✅ yt-dlp: installiert');
     else console.log('║   ❌ yt-dlp: NICHT installiert');
-    
+
     if (ffmpeg) console.log('║   ✅ FFmpeg: installiert');
     else console.log('║   ❌ FFmpeg: NICHT installiert');
-    
+
     if (hasYtDlp && ffmpeg) {
         console.log('║   🎉 ALLE SYSTEMVORAUSSETZUNGEN ERFÜLLT!');
     }

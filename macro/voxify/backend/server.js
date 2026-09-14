@@ -4,32 +4,42 @@ const fs = require('fs');
 const { exec } = require('child_process');
 const googleTTS = require('google-tts-api');
 const fetch = require('node-fetch');
+
 const app = express();
 const port = 3000;
 
-// Wir verwenden eine kostenlose, schlüssel-lose Google Translate TTS-API (inoffiziell)
-// via `google-tts-api`. Keine API-Keys notwendig.
-const ttsAvailable = true;
+// ============================================================
+// PFADE
+// ============================================================
+
+const FRONTEND_DIR = path.join(__dirname, '..', 'frontend');
+const TEMP_DIR = path.join(__dirname, 'temp');
+
+// temp-Ordner sicherstellen
+if (!fs.existsSync(TEMP_DIR)) {
+    fs.mkdirSync(TEMP_DIR, { recursive: true });
+}
 
 // ============================================================
 // EXPRESS SETUP
 // ============================================================
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(FRONTEND_DIR));
+app.use('/temp', express.static(TEMP_DIR));
 
 // ============================================================
 // ROUTES
 // ============================================================
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(FRONTEND_DIR, 'index.html'));
 });
 
 app.get('/api/status', (req, res) => {
     res.json({
-        ttsAvailable: ttsAvailable,
-        message: ttsAvailable ? '✅ Google TTS bereit' : '❌ Google TTS nicht konfiguriert'
+        ttsAvailable: true,
+        message: '✅ Google TTS bereit'
     });
 });
 
@@ -52,9 +62,11 @@ app.post('/api/generate-podcast', async (req, res) => {
         const langShort = (language || 'en-US').split('-')[0];
         const chunks = splitTextIntoChunks(text, 200);
 
+        console.log(`📄 ${chunks.length} Chunks werden verarbeitet...`);
+
         for (let i = 0; i < chunks.length; i++) {
             const chunk = chunks[i];
-            console.log(`   🔊 Chunk ${i+1}/${chunks.length} (${langShort}) - ${chunk.substring(0, 50)}...`);
+            console.log(`   🔊 Chunk ${i + 1}/${chunks.length} (${langShort}) - ${chunk.substring(0, 50)}...`);
 
             const url = googleTTS.getAudioUrl(chunk, {
                 lang: langShort,
@@ -79,50 +91,33 @@ app.post('/api/generate-podcast', async (req, res) => {
         // Alle Audio-Parts zu einem MP3 zusammenfügen
         console.log('🔗 Füge Audio zusammen...');
 
-        // Temp-Dateien für FFmpeg
-        const tempDir = path.join(__dirname, 'temp');
-        if (!fs.existsSync(tempDir)) {
-            fs.mkdirSync(tempDir);
-        }
-
         const timestamp = Date.now();
         const partFiles = [];
 
         for (let i = 0; i < audioParts.length; i++) {
             const part = audioParts[i];
-            if (part.speaker === 'pause') {
-                // Pause als separate Datei
-                const pauseFile = path.join(tempDir, `pause_${timestamp}_${i}.mp3`);
-                const buffer = Buffer.from(part.base64, 'base64');
-                fs.writeFileSync(pauseFile, buffer);
-                partFiles.push(pauseFile);
-            } else {
-                const partFile = path.join(tempDir, `part_${timestamp}_${i}.mp3`);
-                const buffer = Buffer.from(part.base64, 'base64');
-                fs.writeFileSync(partFile, buffer);
-                partFiles.push(partFile);
-            }
+            const prefix = part.speaker === 'pause' ? 'pause' : 'part';
+            const partFile = path.join(TEMP_DIR, `${prefix}_${timestamp}_${i}.mp3`);
+            const buffer = Buffer.from(part.base64, 'base64');
+            fs.writeFileSync(partFile, buffer);
+            partFiles.push(partFile);
         }
 
         // FFmpeg: Alle Teile zu einer Datei zusammenfügen
-        const outputFile = path.join(tempDir, `podcast_${timestamp}.mp3`);
+        const outputFile = path.join(TEMP_DIR, `podcast_${timestamp}.mp3`);
 
-        // Filter für FFmpeg (concat)
         const concatFilter = partFiles.map((f, i) => `[${i}:0]`).join('');
 
-        // Liste der Input-Dateien
         let inputArgs = '';
         for (const f of partFiles) {
             inputArgs += ` -i "${f}"`;
         }
 
-        // FFmpeg Befehl
         const filterComplex = `"${concatFilter}concat=n=${partFiles.length}:v=0:a=1[out]"`;
         const cmd = `ffmpeg${inputArgs} -filter_complex ${filterComplex} -map "[out]" -y "${outputFile}"`;
 
-        console.log(`🔧 FFmpeg Befehl: ${cmd}`);
+        console.log(`🔧 FFmpeg Befehl wird ausgeführt...`);
 
-        // FFmpeg ausführen
         await new Promise((resolve, reject) => {
             exec(cmd, { timeout: 60000 }, (error, stdout, stderr) => {
                 if (error) {
@@ -142,11 +137,9 @@ app.post('/api/generate-podcast', async (req, res) => {
         // Audio-URL zurückgeben
         const audioUrl = `/temp/podcast_${timestamp}.mp3`;
 
-        // Erfolg
         res.json({
             success: true,
             audioUrl: audioUrl,
-            duration: dialogs.length,
             parts: audioParts.length,
             fileSize: fs.statSync(outputFile).size
         });
@@ -169,26 +162,19 @@ app.post('/api/generate-podcast', async (req, res) => {
 async function generateSilence(duration) {
     return new Promise((resolve, reject) => {
         const timestamp = Date.now();
-        const silenceFile = path.join(__dirname, 'temp', `silence_${timestamp}.mp3`);
+        const silenceFile = path.join(TEMP_DIR, `silence_${timestamp}.mp3`);
 
-        if (!fs.existsSync(path.join(__dirname, 'temp'))) {
-            fs.mkdirSync(path.join(__dirname, 'temp'));
-        }
-
-        // FFmpeg: Stille generieren
         const cmd = `ffmpeg -f lavfi -i anullsrc=r=44100:cl=mono -t ${duration} -q:a 9 -acodec libmp3lame "${silenceFile}" -y`;
 
-        exec(cmd, { timeout: 10000 }, (error, stdout, stderr) => {
+        exec(cmd, { timeout: 10000 }, (error) => {
             if (error) {
                 reject(error);
                 return;
             }
 
-            // Datei in Base64 umwandeln
             const buffer = fs.readFileSync(silenceFile);
             const base64 = buffer.toString('base64');
 
-            // Temp löschen
             try { fs.unlinkSync(silenceFile); } catch (e) {}
 
             resolve(base64);
@@ -199,6 +185,7 @@ async function generateSilence(duration) {
 // ============================================================
 // HELPER: Text in Chunks teilen
 // ============================================================
+
 function splitTextIntoChunks(text, maxLen) {
     if (!text) return [];
     const chunks = [];
@@ -210,10 +197,13 @@ function splitTextIntoChunks(text, maxLen) {
             break;
         }
 
-        // Suche nach letztem Satzende oder Leerzeichen bevor maxLen
         let idx = -1;
         const slice = remaining.slice(0, maxLen + 1);
-        const lastSentence = Math.max(slice.lastIndexOf('. '), slice.lastIndexOf('! '), slice.lastIndexOf('? '));
+        const lastSentence = Math.max(
+            slice.lastIndexOf('. '),
+            slice.lastIndexOf('! '),
+            slice.lastIndexOf('? ')
+        );
         if (lastSentence > -1) idx = lastSentence + 1;
         if (idx === -1) {
             const lastSpace = slice.lastIndexOf(' ');
@@ -229,19 +219,6 @@ function splitTextIntoChunks(text, maxLen) {
 }
 
 // ============================================================
-// TEMP FILES SERVEN
-// ============================================================
-
-app.get('/temp/:filename', (req, res) => {
-    const filePath = path.join(__dirname, 'temp', req.params.filename);
-    if (fs.existsSync(filePath)) {
-        res.sendFile(filePath);
-    } else {
-        res.status(404).send('Datei nicht gefunden');
-    }
-});
-
-// ============================================================
 // SERVER START
 // ============================================================
 
@@ -253,16 +230,20 @@ app.listen(port, () => {
     console.log('║                                                            ║');
     console.log(`║   🌐 http://localhost:${port}                               ║`);
     console.log('║                                                            ║');
-
-    if (ttsAvailable) {
-        console.log('║   ✅ Google TTS: Verbunden                              ║');
-        console.log('║   🎤 4M Zeichen/Monat gratis                           ║');
-    } else {
-        console.log('║   ❌ Google TTS: NICHT verbunden                        ║');
-        console.log('║   📦 google-credentials.json in Projektordner legen    ║');
-        console.log('║   📦 Oder GOOGLE_APPLICATION_CREDENTIALS setzen        ║');
-    }
-
+    console.log('║   ✅ Google TTS: Verbunden                                 ║');
+    console.log('║   📁 Frontend: ../frontend                                 ║');
+    console.log('║   📁 Temp:     ./temp                                      ║');
     console.log('║                                                            ║');
     console.log('╚════════════════════════════════════════════════════════════╝\n');
+
+    // FFmpeg-Check
+    exec('ffmpeg -version', (err) => {
+        if (err) {
+            console.error('⚠️  FFmpeg ist NICHT installiert oder nicht im PATH!');
+            console.error('   Ohne FFmpeg kann kein Audio zusammengefügt werden.');
+            console.error('   → https://ffmpeg.org/download.html\n');
+        } else {
+            console.log('✅ FFmpeg gefunden\n');
+        }
+    });
 });
